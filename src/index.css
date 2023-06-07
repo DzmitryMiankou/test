@@ -1,6 +1,7 @@
 :root {
   --app-background: #f1f4f9;
   --app-background-aside: #091336;
+  --white: white;
 }
 
 * {

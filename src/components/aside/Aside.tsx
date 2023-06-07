@@ -10,13 +10,14 @@ import Logo from './logo/Logo';
 import React from 'react';
 
 const tylesSX = {
-    componet: {
+    box: {
         width: "250px",
         height: "100vh",
         backgroundColor: "var(--app-background-aside)",
         display: "flex",
         flexDirection: "column",
         gap: "20px",
+        gridArea: "aside"
     },
     listItem: {
         color: "rgba(255, 255, 255, 0.6)",
@@ -40,7 +41,7 @@ const menuListData = [
 
 const Aside = () => {
     return (
-        <Box sx={tylesSX.componet}>
+        <Box sx={tylesSX.box}>
             <Logo />
             <List sx={{ padding: "0" }} component="nav" aria-labelledby="nested-list-subheader">
                 {menuListData.map(({ data, icon }, i) =>
