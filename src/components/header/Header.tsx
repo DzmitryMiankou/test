@@ -7,14 +7,22 @@ const styleSX = {
         height: "64px",
         gridArea: "header",
         backgroundColor: "var(--white)",
-        width: "100%"
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    box_width: {
+        width: "var(--indentSide)",
     }
 };
 
 const Header = () => {
     return (
         <Box sx={styleSX.box}>
-            <NowDate />
+            <Box sx={styleSX.box_width}>
+                <NowDate />
+            </Box>
         </Box>
     );
 }
