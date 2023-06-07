@@ -13,7 +13,7 @@ const styleSX = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        boxShadow: 3,
+        boxShadow: 1,
     },
     box_width: {
         width: "var(--indentSide)",

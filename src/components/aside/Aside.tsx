@@ -6,6 +6,9 @@ import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
+import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Logo from './logo/Logo';
 import React from 'react';
 
@@ -36,7 +39,10 @@ const menuListData = [
     { data: "звонки", icon: <CallOutlinedIcon />, to: "" },
     { data: "контрагенты", icon: <PeopleAltOutlinedIcon />, to: "" },
     { data: "документы", icon: <DescriptionOutlinedIcon />, to: "" },
-    { data: "исполнители", icon: <PermIdentityOutlinedIcon />, to: "" }
+    { data: "исполнители", icon: <PermIdentityOutlinedIcon />, to: "" },
+    { data: "отчеты", icon: <WorkOutlineOutlinedIcon />, to: "" },
+    { data: "база знаний", icon: <LocalLibraryOutlinedIcon />, to: "" },
+    { data: "настройки", icon: <SettingsOutlinedIcon />, to: "" },
 ];
 
 const Aside = () => {

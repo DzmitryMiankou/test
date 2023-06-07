@@ -248,10 +248,10 @@ export default function EnhancedTable() {
 
     return (
         <Box sx={{ width: "calc(100% - 210px)", margin: "0px", padding: "0px" }}>
-            <Paper sx={{ width: "100%", boxShadow: 3, }}>
+            <Paper sx={{ width: "100%", }}>
                 <TableContainer>
                     <Table
-                        sx={{ minWidth: 750 }}
+                        sx={{ minWidth: 750, boxShadow: 1, }}
                         aria-labelledby="tableTitle"
                         size={dense ? 'small' : 'medium'}
                     >
