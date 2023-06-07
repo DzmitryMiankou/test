@@ -2,6 +2,10 @@
   --app-background: #f1f4f9;
   --app-background-aside: #091336;
   --white: white;
+  --grey-text-light: #899cb1;
+  --green-analytic: #28a879;
+  --green-yellow: #ffd500;
+  --green-red: #ea1a4f;
   --indentSide: calc(100% - 240px);
 }
 
