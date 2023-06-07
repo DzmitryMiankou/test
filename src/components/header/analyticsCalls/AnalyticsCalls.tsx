@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Box, Typography } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-
 const data = [
     { text: "Новые звонки", statiscticaStart: 30, statiscticaEnd: 20, color: "var(--green-analytic)" },
     { text: "Качество разговоров", statisctica: 40, color: "var(--green-yellow)" },

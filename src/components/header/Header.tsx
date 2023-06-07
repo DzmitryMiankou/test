@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import NowDate from './nowDate/NowDate';
 import AnalyticsCalls from './analyticsCalls/AnalyticsCalls';
+import SearchIcon from '@mui/icons-material/Search';
 
 const styleSX = {
     box: {
@@ -11,6 +12,8 @@ const styleSX = {
         width: "100%",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
+        boxShadow: 3,
     },
     box_width: {
         width: "var(--indentSide)",
@@ -27,6 +30,9 @@ const Header = () => {
                 <NowDate />
                 <AnalyticsCalls />
             </Box>
+            <IconButton aria-label="delete" size="small">
+                <SearchIcon sx={{ color: "#ADBFDF" }} />
+            </IconButton>
         </Box>
     );
 }
