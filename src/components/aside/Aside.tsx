@@ -15,7 +15,8 @@ import React from 'react';
 const tylesSX = {
     box: {
         width: "250px",
-        height: "100vh",
+        height: "100%",
+        minHeight: "100vh",
         backgroundColor: "var(--app-background-aside)",
         display: "flex",
         flexDirection: "column",

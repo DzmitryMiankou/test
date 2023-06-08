@@ -5,12 +5,12 @@ const baseQuery = fetchBaseQuery({
     headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer=testtoken",
+        Authorization: "Bearer testtoken",
     },
     credentials: "include",
 });
 
-export const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
+export const baseQueryWithReauth: any = async (args: any, api: any, extraOptions: any) => {
     let result = await baseQuery(args, api, extraOptions);
     return result;
 };
