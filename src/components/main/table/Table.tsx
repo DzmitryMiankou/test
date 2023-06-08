@@ -247,7 +247,7 @@ export default function EnhancedTable() {
     );
 
     return (
-        <Box sx={{ width: "calc(100% - 210px)", margin: "0px", padding: "0px" }}>
+        <Box sx={{ width: "var(--indentSide)" }}>
             <Paper sx={{ width: "100%", }}>
                 <TableContainer>
                     <Table

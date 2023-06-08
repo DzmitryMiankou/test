@@ -10,7 +10,7 @@ const data = [
 
 const AnalyticsCalls = () => {
     return (
-        <Box sx={{ display: "flex", gap: "8%", whiteSpace: "nowrap", }}>{
+        <Box sx={{ display: "flex", gap: "5%", }}>{
             data.map(({ text, statisctica, color, statiscticaStart, statiscticaEnd }, i) =>
                 <Box key={i}>
                     <Typography sx={{ fontSize: "14px !important", }}>

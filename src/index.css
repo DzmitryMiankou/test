@@ -6,13 +6,16 @@
   --green-analytic: #28a879;
   --green-yellow: #ffd500;
   --green-red: #ea1a4f;
+  --blue-active: #002b8c;
+  --blue-hover: #002cfb;
   --indentSide: calc(100% - 240px);
 }
 
 * {
   padding: 0;
   margin: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 body {
