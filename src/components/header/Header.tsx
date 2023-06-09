@@ -5,8 +5,9 @@ import AnalyticsCalls from './analyticsCalls/AnalyticsCalls';
 import SearchIcon from '@mui/icons-material/Search';
 import Avatars from './avatars/Avatars';
 import NameUser from './nameUser/NameUse';
+import { SxProps, Theme } from "@mui/material";
 
-const styleSX = {
+const styleSX: Record<string, SxProps<Theme> | undefined> = {
     box: {
         height: "64px",
         gridArea: "header",
@@ -23,6 +24,18 @@ const styleSX = {
         alignItems: "center",
         gridTemplateColumns: "auto 1fr 1fr",
         gap: "5%"
+    },
+    boxUser: {
+        display: "flex",
+        gap: "8%",
+        justifyContent: "flex-end",
+        marginRight: "-5px",
+        alignItems: "center",
+    },
+    icon: {
+        color: "#ADBFDF",
+        transition: "0.2s",
+        "&:hover": { color: "var(--blue-hover)" }
     }
 };
 
@@ -32,19 +45,9 @@ const Header = () => {
             <Box sx={styleSX.box_width}>
                 <NowDate />
                 <AnalyticsCalls />
-                <Box sx={{
-                    display: "flex",
-                    gap: "8%",
-                    justifyContent: "flex-end",
-                    marginRight: "-5px",
-                    alignItems: "center",
-                }}>
+                <Box sx={styleSX.boxUser}>
                     <Box sx={{ cursor: "pointer" }}>
-                        <SearchIcon sx={{
-                            color: "#ADBFDF",
-                            transition: "0.2s",
-                            "&:hover": { color: "var(--blue-hover)" }
-                        }} />
+                        <SearchIcon sx={styleSX.icon} />
                     </Box>
                     <NameUser />
                     <Avatars />

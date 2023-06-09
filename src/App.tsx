@@ -3,8 +3,9 @@ import Aside from './components/aside/Aside';
 import Header from './components/header/Header';
 import { Box, } from '@mui/material';
 import Main from './components/main/Main';
+import { SxProps, Theme } from "@mui/material";
 
-const styleSX = {
+const styleSX: Record<string, SxProps<Theme> | undefined> = {
   box: {
     display: "grid",
     gridTemplateColumns: "250px 1fr",

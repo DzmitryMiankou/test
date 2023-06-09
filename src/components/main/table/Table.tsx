@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import EnhancedTableToolbar from './enhancedTableToolbar/EnhancedTableToolbar';
 import EnhancedTableHead from './enhancedTableHead/EnhancedTableHead';
+import imgNoAva from '../../../img/noavatar.jpg';
 
 type PartnerDadaType = {
   id: string,
@@ -200,7 +201,11 @@ export default function EnhancedTable({ data }: any) {
                         { hour: '2-digit', minute: '2-digit' })}`
                     }</TableCell>
                     <TableCell align="left" >
-                      <img alt="avatar" src={`${row?.person_avatar}`} style={{ height: "30px", width: "30px", borderRadius: "50px" }} />
+                      <img alt="avatar"
+                        src={`${row?.person_avatar}` || imgNoAva}
+                        style={{
+                          height: "30px", width: "30px", borderRadius: "50px"
+                        }} />
                     </TableCell>
                     <TableCell align="left">{row?.partner_data.phone}</TableCell>
                     <TableCell sx={{ color: "var(--grey-source)" }} align="right">{row?.source}</TableCell>
