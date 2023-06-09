@@ -1,4 +1,9 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type {
+    BaseQueryFn,
+    FetchArgs,
+    FetchBaseQueryError,
+} from '@reduxjs/toolkit/query'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: "https://api.skilla.ru/",
@@ -10,7 +15,11 @@ const baseQuery = fetchBaseQuery({
     credentials: "include",
 });
 
-export const baseQueryWithReauth: any = async (args: any, api: any, extraOptions: any) => {
-    let result = await baseQuery(args, api, extraOptions);
+export const baseQueryWithReauth: BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+    const result = await baseQuery(args, api, extraOptions);
     return result;
 };

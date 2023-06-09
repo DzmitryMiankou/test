@@ -7,6 +7,11 @@ import { useGetParamsQuery } from '../../redux/RTK/rtk';
 const Main = () => {
     const { data } = useGetParamsQuery();
 
+
+    React.useEffect(() => {
+        if (data === undefined) return;
+    }, [data]);
+
     return (
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
             <EnhancedTable data={data?.results} />
