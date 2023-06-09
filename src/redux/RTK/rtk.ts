@@ -1,20 +1,18 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./Interceptor";
 
-export const apiSlice: any = createApi({
+export const apiSlice = createApi({
     reducerPath: "API",
     baseQuery: baseQueryWithReauth,
-    refetchOnFocus: true,
-    tagTypes: ["Post"],
     endpoints: (builder) => ({
-        getParams: builder.query({
-            query: (name) => ({
-                url: `mango/getList`,
+        getDate: builder.query({
+            query: (path) => ({
+                url: `${path}`,
                 method: "POST",
                 //params: { name: name.params },
             }),
         }),
-        getList: builder.mutation({
+        /*getListd: builder.mutation({
             query() {
                 return {
                     url: `mango/getList`,
@@ -22,14 +20,10 @@ export const apiSlice: any = createApi({
                     //params: { name: params },
                     //body,
                 };
-            },
-            invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg.id }],
-        }),
-
+            },*/
     }),
 });
 
 export const {
-    useGetListMutation,
-    useGetParamsQuery,
+    useGetDateQuery,
 } = apiSlice;

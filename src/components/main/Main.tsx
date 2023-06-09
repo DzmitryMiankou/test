@@ -1,20 +1,20 @@
 import React from 'react';
 import EnhancedTable from './table/Table';
 import { Box } from '@mui/material';
-import { useGetParamsQuery } from '../../redux/RTK/rtk';
+import { useGetDateQuery } from '../../redux/RTK/rtk';
 
 
 const Main = () => {
-    const { data } = useGetParamsQuery();
-
+    const { data } = useGetDateQuery("mango/getList");
 
     React.useEffect(() => {
         if (data === undefined) return;
     }, [data]);
 
+
     return (
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-            <EnhancedTable data={data?.results} />
+            <EnhancedTable data={data} />
         </Box>
     );
 }

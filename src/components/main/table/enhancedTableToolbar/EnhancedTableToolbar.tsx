@@ -1,60 +1,52 @@
 import * as React from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-
-
+import { Toolbar } from '@mui/material/';
+import MenuList from './menuList/MenuList';
 
 interface EnhancedTableToolbarProps {
     numSelected: number;
 }
 
+
+interface Data {
+    id: number;
+    text: string;
+}
+
+
+function createData(
+    id: number,
+    text: string,
+): Data {
+    return {
+        id,
+        text,
+    };
+}
+
+const rows = [
+    createData(1, "Все типы"),
+    createData(2, "Все сотрудники"),
+    createData(3, "Все звонки"),
+    createData(4, "Все источники"),
+    createData(5, "Все оценки"),
+    createData(6, "Все ошибки"),
+];
+
+
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { numSelected } = props;
+    //const { numSelected } = props;
 
     return (
         <Toolbar
             sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
                 bgcolor: "none",
+                display: "flex",
+                paddingRight: "0 !important",
+                justifyContent: "flex-end",
+                gap: "2%"
             }}
         >
-            {numSelected > 0 ? (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    color="inherit"
-                    variant="subtitle1"
-                    component="div"
-                >
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    variant="h6"
-                    id="tableTitle"
-                    component="div"
-                >
-                    Nutrition
-                </Typography>
-            )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton>
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
+            <MenuList data={rows} />
         </Toolbar>
     );
 }

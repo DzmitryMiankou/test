@@ -1,11 +1,11 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
+//import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { visuallyHidden } from '@mui/utils';
+//import { visuallyHidden } from '@mui/utils';
 import { Data } from '../Table';
 import { Order } from '../Table';
 
@@ -20,24 +20,24 @@ const headCells: readonly HeadCell[] = [
     {
         id: 'id',
         numeric: false,
-        disablePadding: true,
+        disablePadding: false,
         label: 'Тип',
     },
     {
         id: 'date',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Время',
     },
     {
-        id: 'fat',
-        numeric: true,
+        id: 'person_avatar',
+        numeric: false,
         disablePadding: false,
         label: 'Сотрудник',
     },
     {
-        id: 'call',
-        numeric: true,
+        id: 'partner_data',
+        numeric: false,
         disablePadding: false,
         label: 'Звонок',
     },
@@ -70,13 +70,14 @@ interface EnhancedTableProps {
     rowCount: number;
 }
 
+
 const EnhancedTableHead = (props: EnhancedTableProps) => {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
         props;
-    const createSortHandler =
+    /*const createSortHandler =
         (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
-        };
+        };*/
 
     return (
         <TableHead>
@@ -90,6 +91,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                         inputProps={{
                             'aria-label': 'select all desserts',
                         }}
+                        sx={{ color: "var(--blue-checked)", }}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
@@ -98,19 +100,19 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
+                        sx={{ padding: "16px" }}
                     >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
+                        <Typography
+                            //active={orderBy === headCell.id}
+                            //direction={orderBy === headCell.id ? order : 'asc'}
+                            //TableSortLabel
+                            //onClick={createSortHandler(headCell.id)}
+                            //sx={{ color: "var(--grey-text-light)", "&:hover": { color: "var( --blue-hover)" } }}
+                            sx={{ color: "var(--grey-text-light)", fontSize: 14 }}
                         >
                             {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
+
+                        </Typography>
                     </TableCell>
                 ))}
             </TableRow>

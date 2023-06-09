@@ -11,14 +11,19 @@ import Checkbox from '@mui/material/Checkbox';
 import EnhancedTableToolbar from './enhancedTableToolbar/EnhancedTableToolbar';
 import EnhancedTableHead from './enhancedTableHead/EnhancedTableHead';
 
+type PartnerDadaType = {
+  id: string,
+  name: string,
+  phone: string,
+}
 export interface Data {
   date: string;
   source: string;
-  fat: number;
+  person_avatar: string;
   id: string;
   protein: number;
   time: number;
-  call: string;
+  partner_data: PartnerDadaType;
 }
 
 export type Order = 'asc' | 'desc';
@@ -38,8 +43,8 @@ function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  a: { [key in Key]: number | string | any },
+  b: { [key in Key]: number | string | any },
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -68,6 +73,7 @@ export default function EnhancedTable({ data }: any) {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [isShown, setIsShown] = React.useState("");
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -80,14 +86,14 @@ export default function EnhancedTable({ data }: any) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = data?.map((n: any) => n.name);
+      const newSelected = data?.results?.map((n: any) => n.name);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string | any) => {
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -121,11 +127,11 @@ export default function EnhancedTable({ data }: any) {
 
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.results?.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(data, getComparator(order, orderBy))?.slice(
+      stableSort(data?.results, getComparator(order, orderBy))?.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
@@ -136,7 +142,6 @@ export default function EnhancedTable({ data }: any) {
     <Box sx={{ width: 'var(--indentSide)' }}>
       <EnhancedTableToolbar numSelected={selected.length} />
       <Paper sx={{ width: '100%', mb: 2 }}>
-
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -148,7 +153,7 @@ export default function EnhancedTable({ data }: any) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={data?.length}
+              rowCount={data?.results?.length}
             />
             <TableBody>
               {visibleRows?.map((row, index) => {
@@ -157,6 +162,8 @@ export default function EnhancedTable({ data }: any) {
 
                 return (
                   <TableRow
+                    onMouseEnter={() => setIsShown(`${row?.id}`)}
+                    onMouseLeave={() => setIsShown("")}
                     hover
                     onClick={(event) => handleClick(event, row?.date)}
                     role="checkbox"
@@ -164,14 +171,19 @@ export default function EnhancedTable({ data }: any) {
                     tabIndex={-1}
                     key={row?.date}
                     selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: 'pointer', "&:hover": { background: "var(--blue-selected-row) !important" } }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
+                        id={`${row?.id}`}
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
                           'aria-labelledby': labelId,
+                        }}
+                        sx={{
+                          color: "var(--blue-checked)",
+                          display: isShown === `${row?.id}` || isItemSelected ? "block" : "none"
                         }}
                       />
                     </TableCell>
@@ -183,10 +195,15 @@ export default function EnhancedTable({ data }: any) {
                     >
                       {row?.id}
                     </TableCell>
-                    <TableCell align="right">{`${new Date(row?.date).toLocaleString("ru", { hour: '2-digit', minute: '2-digit' })}`}</TableCell>
-                    <TableCell align="right">{row?.fat}</TableCell>
-                    <TableCell align="right">{row?.call}</TableCell>
-                    <TableCell align="right">{row?.source}</TableCell>
+                    <TableCell align="left">{
+                      `${new Date(row?.date).toLocaleString("ru",
+                        { hour: '2-digit', minute: '2-digit' })}`
+                    }</TableCell>
+                    <TableCell align="left" >
+                      <img alt="avatar" src={`${row?.person_avatar}`} style={{ height: "30px", width: "30px", borderRadius: "50px" }} />
+                    </TableCell>
+                    <TableCell align="left">{row?.partner_data.phone}</TableCell>
+                    <TableCell sx={{ color: "var(--grey-source)" }} align="right">{row?.source}</TableCell>
                     <TableCell align="right">{row?.protein}</TableCell>
                     <TableCell align="right">{row?.time}</TableCell>
                   </TableRow>
@@ -207,13 +224,13 @@ export default function EnhancedTable({ data }: any) {
         <TablePagination
           rowsPerPageOptions={[25, 50]}
           component="div"
-          count={0 ?? +data?.length}
+          count={+data?.total_rows}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </Box>
+    </Box >
   );
 }

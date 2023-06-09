@@ -3,11 +3,14 @@
   --app-background-aside: #091336;
   --white: white;
   --grey-text-light: #899cb1;
+  --grey-source: #5e7793;
   --green-analytic: #28a879;
   --green-yellow: #ffd500;
   --green-red: #ea1a4f;
   --blue-active: #002b8c;
   --blue-hover: #002cfb;
+  --blue-checked: #adbfdf;
+  --blue-selected-row: rgba(212, 223, 243, 0.17);
   --indentSide: calc(100% - 240px);
 }
 
