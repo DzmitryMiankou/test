@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
         getDate: builder.query({
-            query: (path) => ({
+            query: (path: string) => ({
                 url: `${path}`,
                 method: "POST",
                 //params: { name: name.params },

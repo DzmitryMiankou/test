@@ -4,27 +4,28 @@ import MenuList from './menuList/MenuList';
 
 interface EnhancedTableToolbarProps {
     numSelected: number;
-}
-
+};
 
 interface Data {
     id: number;
     text: string;
-}
-
+    rows?: Array<number | string | null>;
+};
 
 function createData(
     id: number,
     text: string,
+    rows?: Array<number | string | null>,
 ): Data {
     return {
         id,
         text,
+        rows,
     };
-}
+};
 
 const rows = [
-    createData(1, "Все типы"),
+    createData(1, "Все типы", ["Исходящие", "Входящие"]),
     createData(2, "Все сотрудники"),
     createData(3, "Все звонки"),
     createData(4, "Все источники"),
@@ -50,6 +51,5 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Toolbar>
     );
 }
-
 
 export default EnhancedTableToolbar;

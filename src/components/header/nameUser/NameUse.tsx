@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { SxProps, Theme } from "@mui/material";
 
 const initialStyle = {
     transition: "0.2s",
@@ -11,7 +12,7 @@ const initialStyle = {
     }
 };
 
-const styleSX = {
+const styleSX: Record<string, SxProps<Theme>> = {
     box: {
         display: "flex",
         alignItems: "center",
@@ -35,9 +36,9 @@ const styleSX = {
 
 
 const NameUser = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState<boolean>(false);
 
-    const handleClick = () => {
+    const handleClick = (): void => {
         setOpen(!open);
     };
 

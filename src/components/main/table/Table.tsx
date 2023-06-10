@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import EnhancedTableToolbar from './enhancedTableToolbar/EnhancedTableToolbar';
 import EnhancedTableHead from './enhancedTableHead/EnhancedTableHead';
 import imgNoAva from '../../../img/noavatar.jpg';
+import CallMadeIcon from '@mui/icons-material/CallMade';
 
 type PartnerDadaType = {
   id: string,
@@ -21,7 +22,7 @@ export interface Data {
   date: string;
   source: string;
   person_avatar: string;
-  id: string;
+  in_out: string;
   protein: number;
   time: number;
   partner_data: PartnerDadaType;
@@ -68,13 +69,13 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 
 
 
-export default function EnhancedTable({ data }: any) {
+export default function EnhancedTable({ data }: { [x: string]: any }) {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data | any>();
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  const [isShown, setIsShown] = React.useState("");
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(25);
+  const [isShown, setIsShown] = React.useState<string>("");
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -192,9 +193,14 @@ export default function EnhancedTable({ data }: any) {
                       component="th"
                       id={labelId}
                       scope="row"
-                      padding="none"
                     >
-                      {row?.id}
+                      {
+                        row?.in_out === 0 ?
+                          <CallMadeIcon sx={{ color: "var(--green-analytic)", fontSize: "20px" }} />
+                          : row?.in_out === 1 ?
+                            < CallMadeIcon sx={{ color: "var(--blue-arrow)", fontSize: "20px", transform: "rotate(180deg)", }} />
+                            : <CallMadeIcon sx={{ color: "var(--green-red)", fontSize: "20px" }} />
+                      }
                     </TableCell>
                     <TableCell align="left">{
                       `${new Date(row?.date).toLocaleString("ru",

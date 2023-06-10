@@ -7,7 +7,7 @@ import Avatars from './avatars/Avatars';
 import NameUser from './nameUser/NameUse';
 import { SxProps, Theme } from "@mui/material";
 
-const styleSX: Record<string, SxProps<Theme> | undefined> = {
+const styleSX: Record<string, SxProps<Theme>> = {
     box: {
         height: "64px",
         gridArea: "header",
@@ -40,6 +40,7 @@ const styleSX: Record<string, SxProps<Theme> | undefined> = {
 };
 
 const Header = () => {
+
     return (
         <Box sx={styleSX.box}>
             <Box sx={styleSX.box_width}>

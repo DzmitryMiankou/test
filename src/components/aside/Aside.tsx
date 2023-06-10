@@ -10,9 +10,10 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Logo from './logo/Logo';
+import { SxProps, Theme } from "@mui/material";
 import React from 'react';
 
-const tylesSX = {
+const tylesSX: Record<string, SxProps<Theme>> = {
     box: {
         width: "250px",
         height: "100%",
@@ -30,10 +31,19 @@ const tylesSX = {
         alignItems: "center",
         height: "50px",
         gap: "10px",
+        "&:hover": {
+            backgroundColor: "#D8E4FB10"
+        }
     }
-}
+};
 
-const menuListData = [
+interface DataType {
+    data: string,
+    icon: JSX.Element,
+    to: string,
+};
+
+const menuListData: DataType[] = [
     { data: "итоги", icon: <TimelineIcon />, to: "" },
     { data: "заказы", icon: <DoneAllIcon />, to: "" },
     { data: "сообщения", icon: <EmailOutlinedIcon />, to: "" },
@@ -48,9 +58,9 @@ const menuListData = [
 
 const Aside = () => {
     return (
-        <Box sx={tylesSX.box}>
+        <Box component="aside" sx={tylesSX.box}>
             <Logo />
-            <List sx={{ padding: "0" }} component="nav" aria-labelledby="nested-list-subheader">
+            <List sx={{ p: "0" }} component="nav" aria-labelledby="nested-list-subheader">
                 {menuListData.map(({ data, icon }, i) =>
                     <ListItemButton key={i} sx={tylesSX.listItem}>
                         <ListItemIcon sx={{ color: "rgba(255, 255, 255, 0.6)", minWidth: "auto", }}>{icon}</ListItemIcon>

@@ -5,7 +5,7 @@ import { Box, } from '@mui/material';
 import Main from './components/main/Main';
 import { SxProps, Theme } from "@mui/material";
 
-const styleSX: Record<string, SxProps<Theme> | undefined> = {
+const styleSX: Record<string, SxProps<Theme>> = {
   box: {
     display: "grid",
     gridTemplateColumns: "250px 1fr",
