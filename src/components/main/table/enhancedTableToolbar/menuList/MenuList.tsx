@@ -58,7 +58,8 @@ const MenuList = ({ data }: { [x: string]: any }) => {
                                 </Box>
                             </Box>
                         </>
-                    } />
+                    }
+                />
             )}
         </>
     );
