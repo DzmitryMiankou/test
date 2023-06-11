@@ -12,14 +12,14 @@ interface ActionA {
 
 const LISTALL = "SET_ALL_LIST";
 
-const initialState: null | any = {
+const initialState: null | any | string = {
     listCall: null,
+    order: "",
 };
 
 const getListCallReducer = (state = initialState, action: ActionA) => {
     switch (action.type) {
         case LISTALL: {
-            console.log(action.list)
             return { ...state, listCall: action.list };
         }
         default:
