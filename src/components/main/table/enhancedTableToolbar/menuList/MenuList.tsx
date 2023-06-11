@@ -4,6 +4,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { SxProps, Theme } from "@mui/material";
 import Dashboard from './dashBoard/DashBoard';
+import { RootState } from '../../../../../redux/store';
 
 const styleSX: Record<string, SxProps<Theme>> = {
     box: {
@@ -13,8 +14,7 @@ const styleSX: Record<string, SxProps<Theme>> = {
 };
 
 
-const MenuList = ({ data, state }: { [x: string]: any }) => {
-
+const MenuList = ({ data, state }: { [x: string]: any, state: RootState }) => {
     const [open, setOpen] = React.useState<number>(0);
     const [isShown, setIsShown] = React.useState<number>(0);
 
@@ -22,7 +22,6 @@ const MenuList = ({ data, state }: { [x: string]: any }) => {
         setOpen(id);
     };
 
-    //const { numSelected } = props;
     return (
         <>
             {data?.map(({ id, text, rows, order }: { id: number, text: string, rows?: Array<number | string | null>, order: string }) =>
@@ -43,7 +42,7 @@ const MenuList = ({ data, state }: { [x: string]: any }) => {
                                 sx={{ display: "flex", cursor: "pointer" }}>
                                 <Typography component={"div"} sx={{
                                     fontSize: "14px",
-                                    color: isShown === id ? "var(--blue-hover)" :
+                                    color: isShown === id || text !== order ? "var(--blue-hover)" :
                                         open !== id ? "var(--grey-text-light)" : "var(--blue-text-dark)",
                                 }}>
                                     {text}

@@ -71,7 +71,6 @@ const headCells: readonly HeadCell[] = [
 
 interface EnhancedTableProps {
     numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string | undefined;
@@ -80,12 +79,8 @@ interface EnhancedTableProps {
 
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount } =
         props;
-    /*const createSortHandler =
-        (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-            onRequestSort(event, property);
-        };*/
 
     return (
         <TableHead>
@@ -110,16 +105,8 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                         sortDirection={orderBy === headCell.id ? order : false}
                         sx={{ padding: headCell.padding }}
                     >
-                        <Typography
-                            //active={orderBy === headCell.id}
-                            //direction={orderBy === headCell.id ? order : 'asc'}
-                            //TableSortLabel
-                            //onClick={createSortHandler(headCell.id)}
-                            //sx={{ color: "var(--grey-text-light)", "&:hover": { color: "var( --blue-hover)" } }}
-                            sx={{ color: "var(--grey-text-light)", fontSize: 14 }}
-                        >
+                        <Typography sx={{ color: "var(--grey-text-light)", fontSize: 14 }}>
                             {headCell.label}
-
                         </Typography>
                     </TableCell>
                 ))}

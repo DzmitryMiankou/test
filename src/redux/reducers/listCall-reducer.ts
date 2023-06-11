@@ -55,7 +55,6 @@ const getListCallReducer = (state = initialState, action: ActionA) => {
             copy = { ...state, order4: action.typing.order };
             if (action.typing.order === "Все источники") return { ...copy, listCall: copy?._allList };
             const marvelHeroes = copy?._allList.filter(function (hero: any) {
-                console.log(action.typing.order);
                 return hero.source === action.typing.order;
             });
             copy = {

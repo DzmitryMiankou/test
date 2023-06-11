@@ -77,18 +77,9 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(25);
   const [isShown, setIsShown] = React.useState<string>("");
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = data?.listCall?.map((n: any) => n.name);
+      const newSelected = data?.listCall?.map((n: any) => n.date);
       setSelected(newSelected);
       return;
     }
@@ -124,9 +115,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     setPage(0);
   };
 
-
   const isSelected = (name: string | any) => selected.indexOf(name) !== -1;
-
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.listCall?.length) : 0;
@@ -154,7 +143,6 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
               rowCount={data?.listCall?.length}
             />
             <TableBody>
@@ -192,7 +180,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
 
                         sx={{
                           color: "var(--blue-checked)",
-                          display: isShown === `${row?.id}` || isItemSelected ? "flex" : "none",
+                          display: isShown === `${row?.id}` || isItemSelected || !selected ? "flex" : "none",
                           alignItems: "center"
 
                         }}
@@ -244,7 +232,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
         <TablePagination
           rowsPerPageOptions={[25, 50]}
           component="div"
-          count={+data?.total_rows}
+          count={+data?.total_rows === Number(data?.total_rows) ? +data?.total_rows : 1}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -9,8 +9,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { filterDialogListTYPEAction, filterDialogListSOURCEction } from '../../../../../../redux/reducers/listCall-reducer';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../../../redux/store';
+import { RootState } from '../../../../../../redux/store';
 
-const styleSX: Record<string, SxProps<Theme> | undefined> = {
+const styleSX: Record<string, SxProps<Theme>> = {
     popover: {
         "& .MuiPopover-paper": {
             border: "1px solid #EAF0FA",
@@ -30,18 +31,17 @@ const styleSX: Record<string, SxProps<Theme> | undefined> = {
 };
 
 interface TypeProps {
-    components: any,
+    components: JSX.Element,
     setOpen(x: number): void,
     id: number,
     setIsShown(x: number): void,
     rows?: Array<number | string | null>,
     order?: string,
-    state: any,
+    state: RootState,
 };
 
 
 const BasicPopover = ({ components, setOpen, id, setIsShown, rows, order, state }: TypeProps) => {
-
     const dispatch: AppDispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -62,8 +62,7 @@ const BasicPopover = ({ components, setOpen, id, setIsShown, rows, order, state 
             dispatch(filterDialogListTYPEAction(a));
         };
         if (a.id === 4) {
-            console.log(a)
-            dispatch(filterDialogListSOURCEction(a))
+            dispatch(filterDialogListSOURCEction(a));
         }
     };
 
