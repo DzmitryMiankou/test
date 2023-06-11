@@ -173,9 +173,15 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                     tabIndex={-1}
                     key={row?.date}
                     selected={isItemSelected}
-                    sx={{ cursor: 'pointer', "&:hover": { background: "var(--blue-selected-row) !important" } }}
+                    sx={{
+                      cursor: 'pointer',
+                      "&:hover": { background: "var(--blue-selected-row) !important" },
+                    }}
                   >
-                    <TableCell padding="checkbox">
+                    <TableCell padding="checkbox" sx={{
+                      borderBottom: "none",
+                      width: "20px",
+                    }}>
                       <Checkbox
                         id={`${row?.id}`}
                         color="primary"
@@ -183,13 +189,16 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                         inputProps={{
                           'aria-labelledby': labelId,
                         }}
+
                         sx={{
                           color: "var(--blue-checked)",
-                          display: isShown === `${row?.id}` || isItemSelected ? "block" : "none"
+                          display: isShown === `${row?.id}` || isItemSelected ? "flex" : "none",
+                          alignItems: "center"
+
                         }}
                       />
                     </TableCell>
-                    <TableCell
+                    <TableCell sx={{ width: "50px", paddingLeft: 0, paddingRight: 0 }}
                       component="th"
                       id={labelId}
                       scope="row"
@@ -202,14 +211,14 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                             : <CallMadeIcon sx={{ color: "var(--green-red)", fontSize: "20px" }} />
                       }
                     </TableCell>
-                    <TableCell align="left">{
+                    <TableCell sx={{ width: "70px" }} align="left">{
                       `${new Date(row?.date).toLocaleString("ru",
                         { hour: '2-digit', minute: '2-digit' })}`
                     }</TableCell>
-                    <TableCell align="left" >
-                      <img alt="avatar"
+                    <TableCell sx={{ width: "120px" }} align="left" >
+                      <Box component="img" alt="avatar"
                         src={`${row?.person_avatar}` || imgNoAva}
-                        style={{
+                        sx={{
                           height: "30px", width: "30px", borderRadius: "50px"
                         }} />
                     </TableCell>
@@ -226,7 +235,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                     height: (53) * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={8} />
                 </TableRow>
               )}
             </TableBody>

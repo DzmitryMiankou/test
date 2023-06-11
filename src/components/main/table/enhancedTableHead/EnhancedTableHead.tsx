@@ -14,6 +14,7 @@ interface HeadCell {
     id: keyof Data;
     label: string;
     numeric: boolean;
+    padding: string;
 }
 
 const headCells: readonly HeadCell[] = [
@@ -22,42 +23,49 @@ const headCells: readonly HeadCell[] = [
         numeric: false,
         disablePadding: false,
         label: 'Тип',
+        padding: "2px",
     },
     {
         id: 'date',
         numeric: false,
         disablePadding: false,
         label: 'Время',
+        padding: "16px",
     },
     {
         id: 'person_avatar',
         numeric: false,
         disablePadding: false,
         label: 'Сотрудник',
+        padding: "16px",
     },
     {
         id: 'partner_data',
         numeric: false,
         disablePadding: false,
         label: 'Звонок',
+        padding: "16px",
     },
     {
         id: 'source',
         numeric: true,
         disablePadding: false,
         label: 'Источник',
+        padding: "16px",
     },
     {
         id: 'protein',
         numeric: true,
         disablePadding: false,
         label: 'Оценка',
+        padding: "16px",
     },
     {
         id: 'time',
         numeric: true,
         disablePadding: false,
         label: 'Длительность',
+        padding: "16px",
     },
 ];
 
@@ -100,7 +108,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
-                        sx={{ padding: "16px" }}
+                        sx={{ padding: headCell.padding }}
                     >
                         <Typography
                             //active={orderBy === headCell.id}

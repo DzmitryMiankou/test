@@ -7,8 +7,6 @@ import { useGetDateQuery } from '../../redux/RTK/rtk';
 const Main = () => {
     const { data } = useGetDateQuery("mango/getList");
 
-    console.log(data?.results)
-
     return (
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
             <EnhancedTable data={data} />
