@@ -88,7 +88,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = data?.results?.map((n: any) => n.name);
+      const newSelected = data?.listCall?.map((n: any) => n.name);
       setSelected(newSelected);
       return;
     }
@@ -129,11 +129,11 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
 
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.results?.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.listCall?.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(data?.results, getComparator(order, orderBy))?.slice(
+      stableSort(data?.listCall, getComparator(order, orderBy))?.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
@@ -155,7 +155,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={data?.results?.length}
+              rowCount={data?.listCall?.length}
             />
             <TableBody>
               {visibleRows?.map((row, index) => {

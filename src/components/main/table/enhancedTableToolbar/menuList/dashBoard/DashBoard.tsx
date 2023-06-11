@@ -6,6 +6,9 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import { filterDialogListTYPEAction, filterDialogListSOURCEction } from '../../../../../../redux/reducers/listCall-reducer';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../../../redux/store';
 
 const styleSX: Record<string, SxProps<Theme> | undefined> = {
     popover: {
@@ -29,13 +32,17 @@ const styleSX: Record<string, SxProps<Theme> | undefined> = {
 interface TypeProps {
     components: any,
     setOpen(x: number): void,
-    heading: string,
+    id: number,
     setIsShown(x: number): void,
     rows?: Array<number | string | null>,
+    order?: string,
+    state: any,
 };
 
 
-const BasicPopover = ({ components, setOpen, heading, setIsShown, rows }: TypeProps) => {
+const BasicPopover = ({ components, setOpen, id, setIsShown, rows, order, state }: TypeProps) => {
+
+    const dispatch: AppDispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -49,17 +56,28 @@ const BasicPopover = ({ components, setOpen, heading, setIsShown, rows }: TypePr
         setAnchorEl(null);
     };
 
+    const handleDispach = (a: { order: string, id: number }): void => {
+        handleClose();
+        if (a.id === 1) {
+            dispatch(filterDialogListTYPEAction(a));
+        };
+        if (a.id === 4) {
+            console.log(a)
+            dispatch(filterDialogListSOURCEction(a))
+        }
+    };
+
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const id2 = open ? 'simple-popover' : undefined;
 
     return (
         <div>
-            <Typography component="span" aria-describedby={id} onClick={handleClick}>
+            <Typography component="span" aria-describedby={id2} onClick={handleClick}>
                 {components}
             </Typography>
             <Popover
                 sx={styleSX.popover}
-                id={id}
+                id={id2}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -72,12 +90,12 @@ const BasicPopover = ({ components, setOpen, heading, setIsShown, rows }: TypePr
                     horizontal: 'right',
                 }}
             >
-                <ListItemButton sx={styleSX.heading} onClick={handleClose}>{heading}</ListItemButton>
+                <ListItemButton sx={styleSX.heading} onClick={() => handleDispach({ order: `${order}`, id: id })}>{order}</ListItemButton>
                 <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                     <nav aria-label="main mailbox folders">
                         <List sx={{ p: 0 }}>
                             {rows?.map((data, index) => (
-                                <ListItem key={index} disablePadding onClick={handleClose}>
+                                <ListItem key={index} disablePadding onClick={() => handleDispach({ order: `${data}`, id: id })}>
                                     <ListItemButton sx={{
                                         color: "var(--grey-text-light)",
                                         p: "7px 20px",

@@ -13,7 +13,8 @@ const styleSX: Record<string, SxProps<Theme>> = {
 };
 
 
-const MenuList = ({ data }: { [x: string]: any }) => {
+const MenuList = ({ data, state }: { [x: string]: any }) => {
+
     const [open, setOpen] = React.useState<number>(0);
     const [isShown, setIsShown] = React.useState<number>(0);
 
@@ -24,13 +25,15 @@ const MenuList = ({ data }: { [x: string]: any }) => {
     //const { numSelected } = props;
     return (
         <>
-            {data?.map(({ id, text, rows }: { id: number, text: string, rows?: Array<number | string | null> }) =>
+            {data?.map(({ id, text, rows, order }: { id: number, text: string, rows?: Array<number | string | null>, order: string }) =>
                 <Dashboard
                     setIsShown={setIsShown}
-                    heading={text}
+                    id={id}
                     key={id}
+                    order={order}
                     rows={rows}
                     setOpen={setOpen}
+                    state={state}
                     components={
                         <>
                             <Box

@@ -5,7 +5,7 @@ import { useGetDateQuery } from '../../redux/RTK/rtk';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AppDispatch } from '../../redux/store';
-import { getDialogListActin } from '../../redux/reducers/listCall-reducer';
+import { getDialogListAction } from '../../redux/reducers/listCall-reducer';
 
 
 const Main = () => {
@@ -14,12 +14,12 @@ const Main = () => {
     const dispatch: AppDispatch = useDispatch();
 
     React.useEffect(() => {
-        dispatch(getDialogListActin(data));
+        dispatch(getDialogListAction(data));
     }, [data, dispatch]);
 
     return (
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-            <EnhancedTable data={state?.listCallReducer?.listCall} />
+            <EnhancedTable data={state?.listCallReducer} />
         </Box>
     );
 }
