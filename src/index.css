@@ -1,9 +1,17 @@
+@font-face {
+  font-family: San Francisco Pro Display;
+  font-weight: regular;
+  src: url("./font/SanFranciscoProDisplay/SF-Pro-Display-Regular.otf")
+    format("opentype");
+}
+
 :root {
   --app-background: #f1f4f9;
   --app-background-aside: #091336;
   --white: white;
   --grey-text-light: #899cb1;
   --grey-source: #5e7793;
+  --grey-active: rgba(216, 228, 251, 0.32);
   --green-analytic: #28a879;
   --green-yellow: #ffd500;
   --green-red: #ea1a4f;
@@ -15,6 +23,7 @@
   --blue-checked: #adbfdf;
   --blue-selected-row: rgba(212, 223, 243, 0.17);
   --indentSide: calc(100% - 240px);
+  --font-app: San Francisco Pro Display;
 }
 
 * {
@@ -26,15 +35,9 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: var(--font-app);
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--app-background);
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }

@@ -1,4 +1,4 @@
-import { List, ListItemButton, Box, ListItemIcon } from '@mui/material';
+import { List, ListItemButton, Box, ListItemIcon, Typography } from '@mui/material';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
@@ -13,7 +13,20 @@ import Logo from './logo/Logo';
 import { SxProps, Theme } from "@mui/material";
 import React from 'react';
 
-const tylesSX: Record<string, SxProps<Theme>> = {
+
+const listStyliInitial = {
+    color: "rgba(255, 255, 255, 0.6)",
+    textTransform: "capitalize",
+    display: "flex",
+    alignItems: "center",
+    height: "50px",
+    gap: "10px",
+    "&:hover": {
+        backgroundColor: "#D8E4FB10"
+    }
+};
+
+const stylesSX: Record<string, SxProps<Theme>> = {
     box: {
         width: "250px",
         height: "100%",
@@ -25,14 +38,15 @@ const tylesSX: Record<string, SxProps<Theme>> = {
         gridArea: "aside"
     },
     listItem: {
-        color: "rgba(255, 255, 255, 0.6)",
-        textTransform: "capitalize",
-        display: "flex",
-        alignItems: "center",
-        height: "50px",
-        gap: "10px",
+        ...listStyliInitial,
+    },
+    listItemActive: {
+        ...listStyliInitial,
+        color: "white",
+        borderLeft: "3px solid var(--blue-hover)",
+        backgroundColor: "var(--grey-active)",
         "&:hover": {
-            backgroundColor: "#D8E4FB10"
+            backgroundColor: "var(--grey-active)",
         }
     }
 };
@@ -58,13 +72,13 @@ const menuListData: DataType[] = [
 
 const Aside = () => {
     return (
-        <Box component="aside" sx={tylesSX.box}>
+        <Box component="aside" sx={stylesSX.box}>
             <Logo />
             <List sx={{ p: "0" }} component="nav" aria-labelledby="nested-list-subheader">
                 {menuListData.map(({ data, icon }, i) =>
-                    <ListItemButton key={i} sx={tylesSX.listItem}>
-                        <ListItemIcon sx={{ color: "rgba(255, 255, 255, 0.6)", minWidth: "auto", }}>{icon}</ListItemIcon>
-                        {data}
+                    <ListItemButton key={i} sx={data === "звонки" ? stylesSX.listItemActive : stylesSX.listItem}>
+                        <ListItemIcon sx={{ color: data === "звонки" ? "white" : "rgba(255, 255, 255, 0.6)", minWidth: "auto", }}>{icon}</ListItemIcon>
+                        <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>{data}</Typography>
                     </ListItemButton>
                 )}
             </List>
