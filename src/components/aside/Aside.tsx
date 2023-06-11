@@ -1,4 +1,4 @@
-import { List, ListItemButton, Box, ListItemIcon, Typography } from '@mui/material';
+import { List, ListItemButton, Box, ListItemIcon, Typography, Button } from '@mui/material';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
@@ -8,7 +8,9 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
+import ErrorIcon from '@mui/icons-material/Error';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import Logo from './logo/Logo';
 import { SxProps, Theme } from "@mui/material";
 import React from 'react';
@@ -77,11 +79,47 @@ const Aside = () => {
             <List sx={{ p: "0" }} component="nav" aria-labelledby="nested-list-subheader">
                 {menuListData.map(({ data, icon }, i) =>
                     <ListItemButton key={i} sx={data === "звонки" ? stylesSX.listItemActive : stylesSX.listItem}>
-                        <ListItemIcon sx={{ color: data === "звонки" ? "white" : "rgba(255, 255, 255, 0.6)", minWidth: "auto", }}>{icon}</ListItemIcon>
+                        <ListItemIcon sx={{
+                            color: data === "звонки" ?
+                                "white" : "rgba(255, 255, 255, 0.6)",
+                            minWidth: "auto",
+                        }}>
+                            {icon}
+                        </ListItemIcon>
                         <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>{data}</Typography>
                     </ListItemButton>
                 )}
             </List>
+            <Box sx={{
+                marginTop: "60px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "32px",
+            }}>
+                <Button sx={{
+                    width: "200px", height: "52px", display: "flex",
+                }} variant="contained" >
+                    <Typography sx={{
+                        marginLeft: "auto",
+                        textTransform: "none",
+                        fontWeight: "500",
+                        fontSize: "16px"
+                    }}>Добавить заказ</Typography>
+                    <AddCircleRoundedIcon sx={{ marginLeft: "auto", fontSize: "30px", color: "rgba(216, 228, 251, 0.56)" }} />
+                </Button>
+                <Button sx={{
+                    width: "200px", height: "52px", display: "flex",
+                }} variant="contained">
+                    <Typography sx={{
+                        marginLeft: "auto",
+                        textTransform: "none",
+                        fontSize: "16px",
+                        fontWeight: "500"
+                    }}>Оплата</Typography>
+                    <ErrorIcon sx={{ marginLeft: "auto", fontSize: "30px", color: "rgba(216, 228, 251, 0.56)" }} />
+                </Button>
+            </Box>
         </Box>
     );
 }

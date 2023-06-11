@@ -12,7 +12,7 @@ const AnalyticsCalls = () => {
     return (
         <Box sx={{ display: "flex", gap: "5%", }}>{
             data.map(({ text, statisctica, color, statiscticaStart, statiscticaEnd }, i) =>
-                <Box key={i}>
+                <Box key={i} sx={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                     <Typography sx={{ fontSize: "14px !important", }}>
                         {text}{" "}
                         <Box component="span" sx={{ color: color }}>{statisctica ? statisctica : `${statiscticaEnd} из ${statiscticaStart} шт`}</Box>
