@@ -49,7 +49,11 @@ const MenuList = ({ data, state }: { [x: string]: any; state: RootState }) => {
                   onMouseEnter={() => setIsShown(id)}
                   onMouseLeave={() => setIsShown(0)}
                   onClick={() => handleClick(id)}
-                  sx={{ display: "flex", cursor: "pointer" }}
+                  sx={{
+                    display: "flex",
+                    cursor: "pointer",
+                    alignItems: "center",
+                  }}
                 >
                   <Typography
                     component={"div"}

@@ -4,6 +4,8 @@ import MenuList from "./menuList/MenuList";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import MenuDate from "./menuDate/MenuDate";
+import DeleteFilterButton from "./deleteFilter/DeleteFilter";
+import SearchButton from "./search/Search";
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
@@ -71,7 +73,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        paddingRight: "0 !important",
+        padding: "0 !important",
         gap: "30px",
         marginBottom: "20px",
       }}
@@ -79,12 +81,24 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
       <MenuDate />
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: "2%",
+          display: "grid",
+          width: "100%",
+          gridTemplateColumns: "auto 1fr",
+          gridTemplateAreas: `"deleteB menu"`,
         }}
       >
-        <MenuList data={rows} state={state} />
+        <SearchButton />
+        <Box
+          sx={{
+            gridArea: "menu",
+            display: "flex",
+            gap: "2%",
+            justifyContent: "flex-end",
+          }}
+        >
+          <DeleteFilterButton />
+          <MenuList data={rows} state={state} />
+        </Box>
       </Box>
     </Toolbar>
   );
