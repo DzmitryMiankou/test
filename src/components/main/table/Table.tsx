@@ -70,8 +70,8 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 
 
 export default function EnhancedTable({ data }: { [x: string]: any }) {
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data | any>();
+  const [order] = React.useState<Order>('asc');
+  const [orderBy] = React.useState<keyof Data | any>();
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(25);
@@ -186,7 +186,12 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                         }}
                       />
                     </TableCell>
-                    <TableCell sx={{ width: "50px", paddingLeft: 0, paddingRight: 0 }}
+                    <TableCell sx={{
+                      width: "50px",
+                      paddingLeft: 0,
+                      borderBottom: "1px solid #EAF0FA",
+                      paddingRight: 0
+                    }}
                       component="th"
                       id={labelId}
                       scope="row"
@@ -199,21 +204,37 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                             : <CallMadeIcon sx={{ color: "var(--green-red)", fontSize: "20px" }} />
                       }
                     </TableCell>
-                    <TableCell sx={{ width: "70px" }} align="left">{
+                    <TableCell sx={{ width: "70px", borderBottom: "1px solid #EAF0FA", }} align="left">{
                       `${new Date(row?.date).toLocaleString("ru",
                         { hour: '2-digit', minute: '2-digit' })}`
                     }</TableCell>
-                    <TableCell sx={{ width: "120px" }} align="left" >
+                    <TableCell sx={{ width: "120px", borderBottom: "1px solid #EAF0FA", }} align="left" >
                       <Box component="img" alt="avatar"
                         src={`${row?.person_avatar}` || imgNoAva}
                         sx={{
                           height: "30px", width: "30px", borderRadius: "50px"
                         }} />
                     </TableCell>
-                    <TableCell align="left">{row?.partner_data.phone}</TableCell>
-                    <TableCell sx={{ color: "var(--grey-source)" }} align="right">{row?.source}</TableCell>
-                    <TableCell align="right">{row?.protein}</TableCell>
-                    <TableCell align="right">{row?.time}</TableCell>
+                    <TableCell
+                      sx={{ borderBottom: "1px solid #EAF0FA", }}
+                      align="left">
+                      {row?.partner_data.phone}
+                    </TableCell>
+                    <TableCell
+                      sx={{ color: "var(--grey-source)", borderBottom: "1px solid #EAF0FA", }}
+                      align="right">
+                      {row?.source}
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderBottom: "1px solid #EAF0FA", }}
+                      align="right">
+                      {row?.protein}
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderBottom: "1px solid #EAF0FA", }}
+                      align="right">
+                      {row?.time}
+                    </TableCell>
                   </TableRow>
                 );
               })}

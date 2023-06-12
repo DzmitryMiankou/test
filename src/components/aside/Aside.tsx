@@ -50,9 +50,40 @@ const stylesSX: Record<string, SxProps<Theme>> = {
         "&:hover": {
             backgroundColor: "var(--grey-active)",
         }
+    },
+    button: {
+        width: "200px",
+        height: "52px",
+        display: "flex",
+        backgroundColor: "var(--blue-arrow)",
+        "&:hover": {
+            backgroundColor: "var(--blue-buuton-hover)"
+        }
+    },
+    icon: {
+        marginLeft: "auto",
+        fontSize: "30px",
+        color: "rgba(216, 228, 251, 0.56)"
     }
 };
 
+interface Data {
+    id: number;
+    text: string;
+    icon: JSX.Element;
+};
+
+function createData(
+    id: number,
+    text: string,
+    icon: JSX.Element,
+): Data {
+    return {
+        id,
+        text,
+        icon,
+    };
+};
 interface DataType {
     data: string,
     icon: JSX.Element,
@@ -72,7 +103,13 @@ const menuListData: DataType[] = [
     { data: "настройки", icon: <SettingsOutlinedIcon />, to: "" },
 ];
 
+
 const Aside = () => {
+    const rows = [
+        createData(1, "Добавить заказ", <AddCircleRoundedIcon sx={stylesSX.icon} />),
+        createData(2, "Оплата", <ErrorIcon sx={stylesSX.icon} />),
+    ];
+
     return (
         <Box component="aside" sx={stylesSX.box}>
             <Logo />
@@ -96,29 +133,17 @@ const Aside = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "32px",
-            }}>
-                <Button sx={{
-                    width: "200px", height: "52px", display: "flex",
-                }} variant="contained" >
+            }}>{rows.map(({ id, text, icon }) => (
+                <Button key={id} sx={stylesSX.button} variant="contained" >
                     <Typography sx={{
                         marginLeft: "auto",
                         textTransform: "none",
                         fontWeight: "500",
                         fontSize: "16px"
-                    }}>Добавить заказ</Typography>
-                    <AddCircleRoundedIcon sx={{ marginLeft: "auto", fontSize: "30px", color: "rgba(216, 228, 251, 0.56)" }} />
+                    }}>{text}</Typography>
+                    {icon}
                 </Button>
-                <Button sx={{
-                    width: "200px", height: "52px", display: "flex",
-                }} variant="contained">
-                    <Typography sx={{
-                        marginLeft: "auto",
-                        textTransform: "none",
-                        fontSize: "16px",
-                        fontWeight: "500"
-                    }}>Оплата</Typography>
-                    <ErrorIcon sx={{ marginLeft: "auto", fontSize: "30px", color: "rgba(216, 228, 251, 0.56)" }} />
-                </Button>
+            ))}
             </Box>
         </Box>
     );

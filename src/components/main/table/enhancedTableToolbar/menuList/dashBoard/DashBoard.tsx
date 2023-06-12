@@ -22,6 +22,7 @@ const styleSX: Record<string, SxProps<Theme>> = {
     },
     heading: {
         p: "7px 20px",
+        fontSize: "14px",
         color: "#002CFB",
         opacity: "0.87",
         "&:hover": {
@@ -98,6 +99,7 @@ const BasicPopover = ({ components, setOpen, id, setIsShown, rows, order, state 
                                     <ListItemButton sx={{
                                         color: "var(--grey-text-light)",
                                         p: "7px 20px",
+                                        fontSize: "14px",
                                         "&:hover": {
                                             color: "var(--blue-text-dark)",
                                             backgroundColor: "var(--blue-hover-opacity)",

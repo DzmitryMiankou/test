@@ -1,3 +1,5 @@
+import { getFilter } from "../services/listCallReducerService";
+
 interface ActionA {
     type: string;
     list?: {
@@ -15,7 +17,7 @@ const LISTALL: string = "SET_ALL_LIST";
 const LISTFILTERTYPE: string = "FILTER_LIST_TYPE";
 const LISTFILTERSOURCE: string = "FILTER_LIST_SOURCE";
 
-const initialState: null | any | string = {
+const initialState: null | number | string | any = {
     _allList: null,
     listCall: null,
     order: "",
@@ -40,26 +42,19 @@ const getListCallReducer = (state = initialState, action: ActionA) => {
             if (action.typing.order === "Входящие") prop = 1;
             if (action.typing.order === "Исходящие") prop = 0;
             if (action.typing.order === "Все типы") return { ...copy, listCall: copy?._allList };
-            const marvelHeroes = copy?._allList.filter(function (hero: any) {
-                return hero.in_out === prop;
-            });
             copy = {
                 ...state,
-                listCall: marvelHeroes,
+                listCall: getFilter(copy?._allList, prop, "in_out"),
                 order: action.typing.order
             };
-            //console.log(copy);
             return copy;
         }
         case LISTFILTERSOURCE: {
             copy = { ...state, order4: action.typing.order };
             if (action.typing.order === "Все источники") return { ...copy, listCall: copy?._allList };
-            const marvelHeroes = copy?._allList.filter(function (hero: any) {
-                return hero.source === action.typing.order;
-            });
             copy = {
                 ...state,
-                listCall: marvelHeroes,
+                listCall: getFilter(copy?._allList, action.typing.order, "source"),
                 order4: action.typing.order
             };
             return copy;
@@ -77,7 +72,7 @@ export const getDialogListAction = (list: {
     }[];
 }) => ({ type: LISTALL, list });
 
-export const filterDialogListTYPEAction = (typing: any) => ({ type: LISTFILTERTYPE, typing });
-export const filterDialogListSOURCEction = (typing: any) => ({ type: LISTFILTERSOURCE, typing });
+export const filterDialogListTYPEAction = (typing: Object) => ({ type: LISTFILTERTYPE, typing });
+export const filterDialogListSOURCEction = (typing: Object) => ({ type: LISTFILTERSOURCE, typing });
 
 export default getListCallReducer;

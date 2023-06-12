@@ -3,9 +3,7 @@ import Typography from '@mui/material/Typography';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-//import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
-//import { visuallyHidden } from '@mui/utils';
 import { Data } from '../Table';
 import { Order } from '../Table';
 
@@ -83,9 +81,9 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
         props;
 
     return (
-        <TableHead>
+        <TableHead >
             <TableRow>
-                <TableCell padding="checkbox">
+                <TableCell padding="checkbox" sx={{ borderBottom: "none", }}>
                     <Checkbox
                         color="primary"
                         indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -103,7 +101,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
-                        sx={{ padding: headCell.padding }}
+                        sx={{ padding: headCell.padding, borderBottom: "1px solid #EAF0FA", }}
                     >
                         <Typography sx={{ color: "var(--grey-text-light)", fontSize: 14 }}>
                             {headCell.label}

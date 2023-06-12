@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Toolbar } from '@mui/material/';
+import { Toolbar, Box } from '@mui/material/';
 import MenuList from './menuList/MenuList';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
+import MenuDate from './menuDate/MenuDate';
 
 interface EnhancedTableToolbarProps {
     numSelected: number;
@@ -58,14 +59,22 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     return (
         <Toolbar
             sx={{
-                bgcolor: "none",
                 display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
                 paddingRight: "0 !important",
-                justifyContent: "flex-end",
-                gap: "2%"
+                gap: "30px",
+                marginBottom: "20px",
             }}
         >
-            <MenuList data={rows} state={state} />
+            <MenuDate />
+            <Box sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "2%"
+            }}>
+                <MenuList data={rows} state={state} />
+            </Box>
         </Toolbar>
     );
 }
