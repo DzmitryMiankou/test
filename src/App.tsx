@@ -1,8 +1,8 @@
-import React from 'react';
-import Aside from './components/aside/Aside';
-import Header from './components/header/Header';
-import { Box, } from '@mui/material';
-import Main from './components/main/Main';
+import React from "react";
+import Aside from "./components/aside/Aside";
+import Header from "./components/header/Header";
+import { Box } from "@mui/material";
+import Main from "./components/main/Main";
 import { SxProps, Theme } from "@mui/material";
 
 const styleSX: Record<string, SxProps<Theme>> = {
@@ -13,10 +13,9 @@ const styleSX: Record<string, SxProps<Theme>> = {
     justifyItems: "center",
     rowGap: "20px",
     gridTemplateRows: "64px 1fr",
-    gridTemplateAreas:
-      `"aside header"
+    gridTemplateAreas: `"aside header"
        "aside main"`,
-  }
+  },
 };
 
 const App = () => {
@@ -27,6 +26,6 @@ const App = () => {
       <Main />
     </Box>
   );
-}
+};
 
 export default App;

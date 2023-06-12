@@ -1,23 +1,23 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import EnhancedTableToolbar from './enhancedTableToolbar/EnhancedTableToolbar';
-import EnhancedTableHead from './enhancedTableHead/EnhancedTableHead';
-import imgNoAva from '../../../img/noavatar.jpg';
-import CallMadeIcon from '@mui/icons-material/CallMade';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import EnhancedTableToolbar from "./enhancedTableToolbar/EnhancedTableToolbar";
+import EnhancedTableHead from "./enhancedTableHead/EnhancedTableHead";
+import imgNoAva from "../../../img/noavatar.jpg";
+import CallMadeIcon from "@mui/icons-material/CallMade";
 
 type PartnerDadaType = {
-  id: string,
-  name: string,
-  phone: string,
-}
+  id: string;
+  name: string;
+  phone: string;
+};
 export interface Data {
   date: string;
   source: string;
@@ -28,8 +28,7 @@ export interface Data {
   partner_data: PartnerDadaType;
 }
 
-export type Order = 'asc' | 'desc';
-
+export type Order = "asc" | "desc";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -43,18 +42,20 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: Key,
+  orderBy: Key
 ): (
   a: { [key in Key]: number | string | any },
-  b: { [key in Key]: number | string | any },
+  b: { [key in Key]: number | string | any }
 ) => number {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(
+  array: readonly T[],
+  comparator: (a: T, b: T) => number
+) {
   const stabilizedThis = array?.map((el, index) => [el, index] as [T, number]);
   stabilizedThis?.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -66,11 +67,8 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
   return stabilizedThis?.map((el) => el[0]);
 }
 
-
-
-
 export default function EnhancedTable({ data }: { [x: string]: any }) {
-  const [order] = React.useState<Order>('asc');
+  const [order] = React.useState<Order>("asc");
   const [orderBy] = React.useState<keyof Data | any>();
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
@@ -99,7 +97,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -110,7 +108,9 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -118,26 +118,25 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
   const isSelected = (name: string | any) => selected.indexOf(name) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.listCall?.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - data.listCall?.length)
+      : 0;
 
   const visibleRows = React.useMemo(
     () =>
       stableSort(data?.listCall, getComparator(order, orderBy))?.slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
+        page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage, data],
+    [order, orderBy, page, rowsPerPage, data]
   );
 
   return (
-    <Box sx={{ width: 'var(--indentSide)' }}>
+    <Box sx={{ width: "var(--indentSide)" }}>
       <EnhancedTableToolbar numSelected={selected.length} />
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-          >
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -162,77 +161,117 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                     key={row?.date}
                     selected={isItemSelected}
                     sx={{
-                      cursor: 'pointer',
-                      "&:hover": { background: "var(--blue-selected-row) !important" },
+                      cursor: "pointer",
+                      "&:hover": {
+                        background: "var(--blue-selected-row) !important",
+                      },
                     }}
                   >
-                    <TableCell padding="checkbox" sx={{
-                      borderBottom: "none",
-                      width: "20px",
-                    }}>
+                    <TableCell
+                      padding="checkbox"
+                      sx={{
+                        borderBottom: "none",
+                        width: "20px",
+                      }}
+                    >
                       <Checkbox
                         id={`${row?.id}`}
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
-                          'aria-labelledby': labelId,
+                          "aria-labelledby": labelId,
                         }}
-
                         sx={{
                           color: "var(--blue-checked)",
-                          display: isShown === `${row?.id}` || isItemSelected || !selected ? "flex" : "none",
-                          alignItems: "center"
-
+                          display:
+                            isShown === `${row?.id}` ||
+                            isItemSelected ||
+                            !selected
+                              ? "flex"
+                              : "none",
+                          alignItems: "center",
                         }}
                       />
                     </TableCell>
-                    <TableCell sx={{
-                      width: "50px",
-                      paddingLeft: 0,
-                      borderBottom: "1px solid #EAF0FA",
-                      paddingRight: 0
-                    }}
+                    <TableCell
+                      sx={{
+                        width: "50px",
+                        paddingLeft: 0,
+                        borderBottom: "1px solid #EAF0FA",
+                        paddingRight: 0,
+                      }}
                       component="th"
                       id={labelId}
                       scope="row"
                     >
-                      {
-                        row?.in_out === 0 ?
-                          <CallMadeIcon sx={{ color: "var(--green-analytic)", fontSize: "20px" }} />
-                          : row?.in_out === 1 ?
-                            < CallMadeIcon sx={{ color: "var(--blue-arrow)", fontSize: "20px", transform: "rotate(180deg)", }} />
-                            : <CallMadeIcon sx={{ color: "var(--green-red)", fontSize: "20px" }} />
-                      }
-                    </TableCell>
-                    <TableCell sx={{ width: "70px", borderBottom: "1px solid #EAF0FA", }} align="left">{
-                      `${new Date(row?.date).toLocaleString("ru",
-                        { hour: '2-digit', minute: '2-digit' })}`
-                    }</TableCell>
-                    <TableCell sx={{ width: "120px", borderBottom: "1px solid #EAF0FA", }} align="left" >
-                      <Box component="img" alt="avatar"
-                        src={`${row?.person_avatar}` || imgNoAva}
-                        sx={{
-                          height: "30px", width: "30px", borderRadius: "50px"
-                        }} />
+                      {row?.in_out === 0 ? (
+                        <CallMadeIcon
+                          sx={{
+                            color: "var(--green-analytic)",
+                            fontSize: "20px",
+                          }}
+                        />
+                      ) : row?.in_out === 1 ? (
+                        <CallMadeIcon
+                          sx={{
+                            color: "var(--blue-arrow)",
+                            fontSize: "20px",
+                            transform: "rotate(180deg)",
+                          }}
+                        />
+                      ) : (
+                        <CallMadeIcon
+                          sx={{ color: "var(--green-red)", fontSize: "20px" }}
+                        />
+                      )}
                     </TableCell>
                     <TableCell
-                      sx={{ borderBottom: "1px solid #EAF0FA", }}
-                      align="left">
+                      sx={{ width: "70px", borderBottom: "1px solid #EAF0FA" }}
+                      align="left"
+                    >{`${new Date(row?.date).toLocaleString("ru", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}`}</TableCell>
+                    <TableCell
+                      sx={{ width: "120px", borderBottom: "1px solid #EAF0FA" }}
+                      align="left"
+                    >
+                      <Box
+                        component="img"
+                        alt="avatar"
+                        src={`${row?.person_avatar}` || imgNoAva}
+                        sx={{
+                          height: "30px",
+                          width: "30px",
+                          borderRadius: "50px",
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell
+                      sx={{ borderBottom: "1px solid #EAF0FA" }}
+                      align="left"
+                    >
                       {row?.partner_data.phone}
                     </TableCell>
                     <TableCell
-                      sx={{ color: "var(--grey-source)", borderBottom: "1px solid #EAF0FA", }}
-                      align="right">
+                      sx={{
+                        color: "var(--grey-source)",
+                        borderBottom: "1px solid #EAF0FA",
+                      }}
+                      align="right"
+                    >
                       {row?.source}
                     </TableCell>
                     <TableCell
-                      sx={{ borderBottom: "1px solid #EAF0FA", }}
-                      align="right">
+                      sx={{ borderBottom: "1px solid #EAF0FA" }}
+                      align="right"
+                    >
                       {row?.protein}
                     </TableCell>
                     <TableCell
-                      sx={{ borderBottom: "1px solid #EAF0FA", }}
-                      align="right">
+                      sx={{ borderBottom: "1px solid #EAF0FA" }}
+                      align="right"
+                    >
                       {row?.time}
                     </TableCell>
                   </TableRow>
@@ -241,7 +280,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (53) * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={8} />
@@ -253,13 +292,17 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
         <TablePagination
           rowsPerPageOptions={[25, 50]}
           component="div"
-          count={+data?.total_rows === Number(data?.total_rows) ? +data?.total_rows : 1}
+          count={
+            +data?.total_rows === Number(data?.total_rows)
+              ? +data?.total_rows
+              : 1
+          }
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </Box >
+    </Box>
   );
 }
