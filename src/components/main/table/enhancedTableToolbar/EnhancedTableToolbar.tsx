@@ -104,7 +104,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         alignItems: "flex-end",
         padding: "0 !important",
         gap: "30px",
-        marginBottom: "20px",
+        marginBottom: "18px",
       }}
     >
       <MenuDate />
@@ -121,6 +121,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           sx={{
             gridArea: "menu",
             display: "flex",
+            alignItems: "center",
             gap: "2%",
             justifyContent: "flex-end",
           }}

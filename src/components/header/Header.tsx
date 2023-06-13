@@ -16,7 +16,7 @@ const styleSX: Record<string, SxProps<Theme>> = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow: 1,
+    boxShadow: "0px 4px 5px #E9EDF3",
   },
   box_width: {
     width: "var(--indentSide)",

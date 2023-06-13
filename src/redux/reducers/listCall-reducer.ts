@@ -40,7 +40,12 @@ const getListCallReducer = (state = initialState, action: ActionA) => {
       let prop: number | null = null;
       if (action.typing.order === "Входящие") prop = 1;
       if (action.typing.order === "Исходящие") prop = 0;
-      if (action.typing.order === "Все типы") prop = 1 || 0;
+      if (action.typing.order === "Все типы")
+        return {
+          ...copy,
+          listCall: copy?._allList,
+          order: action.typing.order,
+        };
       copy = {
         ...state,
         listCall: getFilter(copy?._allList, prop, "in_out"),

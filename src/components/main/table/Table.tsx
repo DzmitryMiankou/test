@@ -137,11 +137,37 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     [order, orderBy, page, rowsPerPage, data]
   );
 
+  const formatNumberPhone = (str: string) => {
+    let cleaned = ("" + str).replace(/\D/g, "");
+
+    let match = cleaned.match(/^(1|)?(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
+
+    if (match) {
+      //Remove the matched extension code
+      //Change this to format for any country code.
+      let intlCode = match[1] ? "+1 " : "+";
+      return [
+        intlCode,
+        match[2],
+        " (",
+        match[3],
+        ") ",
+        match[4],
+        "-",
+        match[5],
+        "-",
+        match[5],
+      ].join("");
+    }
+
+    return null;
+  };
+
   return (
-    <Box sx={{ width: "var(--indentSide)" }}>
+    <Box sx={{ width: "var(--indentSide)", marginBottom: "150px" }}>
       <EnhancedTableToolbar numSelected={selected.length} />
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableContainer>
+        <TableContainer sx={{ boxShadow: "0px 4px 5px #E9EDF3" }}>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
@@ -258,7 +284,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                       sx={{ borderBottom: "1px solid #EAF0FA" }}
                       align="left"
                     >
-                      {row?.partner_data.phone}
+                      {formatNumberPhone(row?.partner_data.phone)}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -310,30 +336,3 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     </Box>
   );
 }
-
-/*       
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-
-<TablePagination
-          rowsPerPageOptions={[25, 50]}
-          component="div"
-          count={
-            +data?.total_rows === Number(data?.total_rows)
-              ? +data?.total_rows
-              : 1
-          }
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */
