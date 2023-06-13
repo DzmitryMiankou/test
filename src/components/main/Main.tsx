@@ -9,6 +9,7 @@ import { getDialogListAction } from "../../redux/reducers/listCall-reducer";
 
 const Main = () => {
   const { data } = useGetDateQuery("mango/getList");
+
   const state = useSelector((state: RootState) => state);
   const dispatch: AppDispatch = useDispatch();
 

@@ -1,11 +1,13 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { Data } from "../Table";
 import { Order } from "../Table";
+import { visuallyHidden } from "@mui/utils";
 
 interface HeadCell {
   disablePadding: boolean;
@@ -46,14 +48,14 @@ const headCells: readonly HeadCell[] = [
   },
   {
     id: "source",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Источник",
     padding: "16px",
   },
   {
     id: "protein",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Оценка",
     padding: "16px",
@@ -73,10 +75,26 @@ interface EnhancedTableProps {
   order: Order;
   orderBy: string | undefined;
   rowCount: number;
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => void;
 }
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
+
+  const createSortHandler =
+    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+      onRequestSort(event, property);
+    };
 
   return (
     <TableHead>
@@ -99,14 +117,31 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            onClick={createSortHandler(headCell.id)}
             sx={{
               padding: headCell.padding,
               borderBottom: "1px solid #EAF0FA",
             }}
           >
-            <Typography sx={{ color: "var(--grey-text-light)", fontSize: 14 }}>
+            <TableSortLabel
+              sx={{
+                color: "var(--grey-text-light)",
+                fontSize: 14,
+                "&.Mui-active": {
+                  color: "rgba(0, 0, 0, 0.6)",
+                },
+              }}
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
               {headCell.label}
-            </Typography>
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </Box>
+              ) : null}
+            </TableSortLabel>
           </TableCell>
         ))}
       </TableRow>

@@ -54,7 +54,18 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
       "Все типы"
     ),
     createData(2, "Все сотрудники", ["Yandex", "Google"], "Все сотрудники"),
-    createData(3, "Все звонки", ["Yandex", "Google"], "Все звонки"),
+    createData(
+      3,
+      "Все звонки",
+      [
+        "Все клиенты",
+        "Новые клиенты",
+        "Все исполнители",
+        "Через приложение",
+        "Прочие звонки",
+      ],
+      "Все звонки"
+    ),
     createData(
       4,
       state?.listCallReducer?.order4 === ""
@@ -63,8 +74,26 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
       Array.from(names),
       "Все источники"
     ),
-    createData(5, "Все оценки", ["Yandex", "Google"], "Все оценки"),
-    createData(6, "Все ошибки", ["Yandex", "Google"], "Все ошибки"),
+    createData(
+      5,
+      "Все оценки",
+      ["Распознать", "Скрипт не использован", "Плохо"],
+      "Все оценки"
+    ),
+    createData(
+      6,
+      "Все ошибки",
+      [
+        "Приветствие",
+        "Имя",
+        "Цена",
+        "Скидка",
+        "Предзаказ",
+        "Благодарность",
+        "Стоп слова",
+      ],
+      "Все ошибки"
+    ),
   ];
 
   return (

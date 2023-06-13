@@ -4,7 +4,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
@@ -12,6 +11,15 @@ import EnhancedTableToolbar from "./enhancedTableToolbar/EnhancedTableToolbar";
 import EnhancedTableHead from "./enhancedTableHead/EnhancedTableHead";
 import imgNoAva from "../../../img/noavatar.jpg";
 import CallMadeIcon from "@mui/icons-material/CallMade";
+import { useGetAudioQuery } from "../../../redux/RTK/rtk";
+
+function Audio({ id, id_s }: any) {
+  const { data } = useGetAudioQuery(
+    `mango/getRecord?record=${id}&partnership_id=${id_s}`
+  );
+
+  return <Box>{data}</Box>;
+}
 
 type PartnerDadaType = {
   id: string;
@@ -68,12 +76,21 @@ function stableSort<T>(
 }
 
 export default function EnhancedTable({ data }: { [x: string]: any }) {
-  const [order] = React.useState<Order>("asc");
-  const [orderBy] = React.useState<keyof Data | any>();
+  const [order, setOrder] = React.useState<Order>("asc");
+  const [orderBy, setOrderBy] = React.useState<keyof Data | any>();
   const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(25);
+  const [page] = React.useState(0);
+  const [rowsPerPage] = React.useState<number>(30);
   const [isShown, setIsShown] = React.useState<string>("");
+
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -104,17 +121,6 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const isSelected = (name: string | any) => selected.indexOf(name) !== -1;
 
   const emptyRows =
@@ -141,6 +147,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
+              onRequestSort={handleRequestSort}
               onSelectAllClick={handleSelectAllClick}
               rowCount={data?.listCall?.length}
             />
@@ -257,22 +264,32 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                       sx={{
                         color: "var(--grey-source)",
                         borderBottom: "1px solid #EAF0FA",
+                        width: "15%",
                       }}
-                      align="right"
+                      align="left"
                     >
                       {row?.source}
                     </TableCell>
                     <TableCell
-                      sx={{ borderBottom: "1px solid #EAF0FA" }}
-                      align="right"
+                      sx={{
+                        borderBottom: "1px solid #EAF0FA",
+                        color: "#EA1A4F",
+                        width: "200px",
+                      }}
+                      align="left"
                     >
-                      {row?.protein}
+                      {row?.errors}
                     </TableCell>
                     <TableCell
                       sx={{ borderBottom: "1px solid #EAF0FA" }}
                       align="right"
                     >
-                      {row?.time}
+                      {row?.time === 0 ? <></> : `0:${row?.time}`}
+                      {row?.time !== 0 ? (
+                        <Audio id={row?.id} id_s={row?.partnership_id} />
+                      ) : (
+                        <></>
+                      )}
                     </TableCell>
                   </TableRow>
                 );
@@ -289,7 +306,25 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+      </Paper>
+    </Box>
+  );
+}
+
+/*       
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+
+<TablePagination
           rowsPerPageOptions={[25, 50]}
           component="div"
           count={
@@ -301,8 +336,4 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Box>
-  );
-}
+        /> */

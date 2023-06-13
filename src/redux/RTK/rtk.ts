@@ -1,27 +1,33 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./Interceptor";
 
+const newHeaders = {
+  headers: {
+    "Content-type": `audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3`,
+    "Content-Transfer-Encoding": "binary",
+    "Content-Disposition": `filename="record.mp3"`,
+    Authorization: "Bearer testtoken",
+  },
+};
+
 export const apiSlice = createApi({
-  reducerPath: "API",
+  reducerPath: "pokemonApi",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getDate: builder.query({
       query: (path: string) => ({
         url: `${path}`,
         method: "POST",
-        //params: { name: name.params },
       }),
     }),
-    /*getListd: builder.mutation({
-            query() {
-                return {
-                    url: `mango/getList`,
-                    method: "POST",
-                    //params: { name: params },
-                    //body,
-                };
-            },*/
+    getAudio: builder.query({
+      query: (path: string) => ({
+        ...newHeaders,
+        url: `${path}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetDateQuery } = apiSlice;
+export const { useGetDateQuery, useGetAudioQuery } = apiSlice;
