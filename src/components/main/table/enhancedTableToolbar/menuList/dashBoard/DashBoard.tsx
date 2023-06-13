@@ -6,33 +6,10 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import {
-  filterDialogListTYPEAction,
-  filterDialogListSOURCEction,
-} from "../../../../../../redux/reducers/listCall-reducer";
+import { filterDialogListTYPEAction } from "../../../../../../redux/reducers/listCall-reducer";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../../../redux/store";
 import { RootState } from "../../../../../../redux/store";
-
-const styleSX: Record<string, SxProps<Theme>> = {
-  popover: {
-    "& .MuiPopover-paper": {
-      border: "1px solid #EAF0FA",
-      boxShadow: "0px 0px 26px rgba(233, 237, 243, 0.8)",
-      borderRadius: "4px",
-      width: "204px",
-    },
-  },
-  heading: {
-    p: "7px 20px",
-    fontSize: "14px",
-    color: "#002CFB",
-    opacity: "0.87",
-    "&:hover": {
-      backgroundColor: "var(--blue-hover-opacity)",
-    },
-  },
-};
 
 interface TypeProps {
   components: JSX.Element;
@@ -75,12 +52,37 @@ const BasicPopover = ({
       dispatch(filterDialogListTYPEAction(a));
     }
     if (a.id === 4) {
-      dispatch(filterDialogListSOURCEction(a));
+      return;
     }
   };
 
   const open = Boolean(anchorEl);
   const id2 = open ? "simple-popover" : undefined;
+
+  const styleSX: Record<string, SxProps<Theme>> = {
+    popover: {
+      "& .MuiPopover-paper": {
+        border: "1px solid #EAF0FA",
+        boxShadow: "0px 0px 26px rgba(233, 237, 243, 0.8)",
+        borderRadius: "4px",
+        width: "204px",
+      },
+    },
+    heading: {
+      p: "7px 20px",
+      fontSize: "14px",
+      color:
+        state?.listCallReducer?.order === order ||
+        state?.listCallReducer?.order === ""
+          ? "#002CFB"
+          : "#899CB1",
+      opacity: "0.87",
+      "&:hover": {
+        backgroundColor: "var(--blue-hover-opacity)",
+        color: "var(--blue-text-dark)",
+      },
+    },
+  };
 
   return (
     <div>
@@ -119,7 +121,10 @@ const BasicPopover = ({
                 >
                   <ListItemButton
                     sx={{
-                      color: "var(--grey-text-light)",
+                      color:
+                        state?.listCallReducer?.order === data
+                          ? "#002CFB"
+                          : "var(--grey-text-light)",
                       p: "7px 20px",
                       fontSize: "14px",
                       "&:hover": {

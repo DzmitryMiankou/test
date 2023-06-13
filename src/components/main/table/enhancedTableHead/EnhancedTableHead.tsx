@@ -75,6 +75,8 @@ interface EnhancedTableProps {
   order: Order;
   orderBy: string | undefined;
   rowCount: number;
+  isShown: any;
+  setIsShown: any;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
     property: keyof Data
@@ -87,8 +89,10 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     order,
     orderBy,
     numSelected,
+    setIsShown,
     rowCount,
     onRequestSort,
+    isShown,
   } = props;
 
   const createSortHandler =
@@ -98,17 +102,25 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow
+        onMouseEnter={() => setIsShown("235635343568hgf4348")}
+        onMouseLeave={() => setIsShown("")}
+      >
         <TableCell padding="checkbox" sx={{ borderBottom: "none" }}>
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
+            sx={{
+              color: "var(--blue-checked)",
+              display:
+                isShown || isShown === "235635343568hgf4348" ? "flex" : "none",
+              alignItems: "center",
+            }}
             inputProps={{
               "aria-label": "select all desserts",
             }}
-            sx={{ color: "var(--blue-checked)" }}
           />
         </TableCell>
         {headCells.map((headCell) => (

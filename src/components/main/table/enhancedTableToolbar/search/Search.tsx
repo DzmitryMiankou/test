@@ -34,6 +34,15 @@ const SearchButton = () => {
       width: "250px",
       p: "2px 6px",
       gap: "6px",
+      "@keyframes pulsatess": {
+        "0%": {
+          opacity: 0,
+          transform: "translateY(20px)",
+        },
+        "100%": { opacity: 1, transform: "translateY(0)" },
+      },
+      animation: "pulsatess 0.5s",
+      position: "absolute",
     },
     typography: {
       fontSize: "14px",
@@ -76,7 +85,7 @@ const SearchButton = () => {
           </Box>
         </Box>
       ) : (
-        <Box sx={styleSX.box2}>
+        <Box sx={isShow ? styleSX.box2 : styleSX.boxend}>
           <SearchIcon sx={{ color: "#ADBFDF", fontSize: "20px" }} />
           <Box
             onFocus={() => setBorder(true)}

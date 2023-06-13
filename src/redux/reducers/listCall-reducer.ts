@@ -14,7 +14,7 @@ interface ActionA {
 
 const LISTALL: string = "SET_ALL_LIST";
 const LISTFILTERTYPE: string = "FILTER_LIST_TYPE";
-const LISTFILTERSOURCE: string = "FILTER_LIST_SOURCE";
+const DELETEFILTER: string = "DELETEFILTER_SOURCE";
 
 const initialState: null | number | string | any = {
   _allList: null,
@@ -53,15 +53,8 @@ const getListCallReducer = (state = initialState, action: ActionA) => {
       };
       return copy;
     }
-    case LISTFILTERSOURCE: {
-      copy = { ...state, order4: action.typing.order };
-      if (action.typing.order === "Все источники")
-        return { ...copy, listCall: copy?._allList };
-      copy = {
-        ...state,
-        listCall: getFilter(copy?._allList, action.typing.order, "source"),
-        order4: action.typing.order,
-      };
+    case DELETEFILTER: {
+      copy = { ...state, listCall: state._allList, order: "Все типы" };
       return copy;
     }
     default:
@@ -81,9 +74,8 @@ export const filterDialogListTYPEAction = (typing: Object) => ({
   type: LISTFILTERTYPE,
   typing,
 });
-export const filterDialogListSOURCEction = (typing: Object) => ({
-  type: LISTFILTERSOURCE,
-  typing,
+export const deleteFilterAction = () => ({
+  type: DELETEFILTER,
 });
 
 export default getListCallReducer;

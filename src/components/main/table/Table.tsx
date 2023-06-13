@@ -16,6 +16,26 @@ import CallMadeIcon from "@mui/icons-material/CallMade";
 import PlayAudio from "./playAudio/PlayAudio";
 //import { useGetAudioQuery } from "../../../redux/RTK/rtk";
 
+const arr = [
+  "",
+  "Yandex",
+  "",
+  "",
+  "Mail",
+  "Google",
+  "",
+  "",
+  "Mail",
+  "Google",
+  "",
+  "",
+  "Yandex",
+  "",
+  "",
+  "",
+  "",
+];
+
 const toMinetfromSec = (sec: number): null | string => {
   if (sec) {
     return Math.floor(sec / 60) + ":" + (sec % 60);
@@ -160,7 +180,6 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     }
     return null;
   };
-
   return (
     <Box sx={{ width: "var(--indentSide)", marginBottom: "150px" }}>
       <EnhancedTableToolbar numSelected={selected.length} />
@@ -169,7 +188,9 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
+              setIsShown={setIsShown}
               order={order}
+              isShown={isShown}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
               onSelectAllClick={handleSelectAllClick}
@@ -289,7 +310,7 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                         />
                       </TableCell>
                       <TableCell
-                        onClick={(event) => handleClick(event, row?.date)}
+                        onClick={(event) => handleClick(event, row?.fphone)}
                         sx={{ borderBottom: "1px solid #EAF0FA" }}
                         align="left"
                       >
@@ -304,7 +325,11 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                         }}
                         align="left"
                       >
-                        {row?.source}
+                        {row?.time > 14
+                          ? arr[1]
+                          : row?.in_out === 1
+                          ? arr[5]
+                          : arr[0]}
                       </TableCell>
                       <TableCell
                         onClick={(event) => handleClick(event, row?.date)}
@@ -315,7 +340,51 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                         }}
                         align="left"
                       >
-                        {row?.errors}
+                        {row?.errors ? (
+                          row?.time > 45 ? (
+                            row?.in_out < 1 ? (
+                              row?.time === 0
+                            ) : (
+                              <Box
+                                sx={{ display: "flex", alignItems: "center" }}
+                              >
+                                <Box
+                                  sx={{
+                                    width: "8px",
+                                    background: "#ADBFDF",
+                                    height: "8px",
+                                    borderRadius: "50px",
+                                  }}
+                                ></Box>
+                                <Box
+                                  sx={{
+                                    width: "8px",
+                                    background: "#ADBFDF",
+                                    height: "8px",
+                                    borderRadius: "50px",
+                                    m: "0 18px 0 2px",
+                                  }}
+                                ></Box>
+                                <Box
+                                  sx={{
+                                    color: "var(--blue-text-dark)",
+                                    backgroundColor: "#D8E4FB",
+                                    border: "1px solid #ADBFDF",
+                                    borderRadius: "4px",
+                                    width: "min-content",
+                                    p: "6px 8px",
+                                  }}
+                                >
+                                  Хорошо
+                                </Box>
+                              </Box>
+                            )
+                          ) : (
+                            row?.errors
+                          )
+                        ) : (
+                          "Плохо"
+                        )}
                       </TableCell>
                       <TableCell
                         onClick={(event) => {

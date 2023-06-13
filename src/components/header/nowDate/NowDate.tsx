@@ -15,9 +15,12 @@ const NowDate = () => {
 
   return (
     <Box sx={{ display: "flex", gap: "5px", color: "var(--grey-text-light)" }}>
-      <Box sx={{ textTransform: "capitalize" }}>{`${getDate({
-        weekday: DateOptions.weekday,
-      })},`}</Box>
+      <Box sx={{ textTransform: "capitalize" }}>{`${new Date().toLocaleString(
+        "ru",
+        {
+          weekday: DateOptions.weekday,
+        }
+      )},`}</Box>
       <Box>
         {getDate({
           day: DateOptions.day,

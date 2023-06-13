@@ -5,12 +5,18 @@ import { SxProps, Theme } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import DashBordDate from "./dashBoards/DashBoard";
 
 const mutch: number = 272;
 
 const MenuDate = () => {
   const [isShow, setShow] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false);
   const [isShowCalend, setShowCalend] = React.useState<boolean>(false);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    setOpen(!open);
+  };
 
   const stylesSX: Record<string, SxProps<Theme>> = {
     box: {
@@ -63,28 +69,25 @@ const MenuDate = () => {
         </Typography>
         <AddCircleRoundedIcon sx={stylesSX.icon} />
       </Box>
-      <Box
-        sx={{
-          minWidth: "110px",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          cursor: "pointer",
-        }}
-      >
-        <KeyboardArrowLeftIcon sx={stylesSX.arrow} />
-        <Box
-          onMouseEnter={() => setShowCalend(!isShowCalend)}
-          onMouseLeave={() => setShowCalend(!isShowCalend)}
-          sx={{ display: "flex", alignItems: "center", gap: "8px" }}
-        >
-          <CalendarTodayIcon sx={stylesSX.calendIcon} />
-          <Typography sx={{ color: "var(--blue-arrow)", fontSize: "14px" }}>
-            3 дня
-          </Typography>
-        </Box>
-        <KeyboardArrowRightIcon sx={stylesSX.arrow} />
-      </Box>
+      <DashBordDate
+        setOpen={handleClick}
+        components={
+          <>
+            <KeyboardArrowLeftIcon sx={stylesSX.arrow} />
+            <Box
+              onMouseEnter={() => setShowCalend(!isShowCalend)}
+              onMouseLeave={() => setShowCalend(!isShowCalend)}
+              sx={{ display: "flex", alignItems: "center", gap: "8px" }}
+            >
+              <CalendarTodayIcon sx={stylesSX.calendIcon} />
+              <Typography sx={{ color: "var(--blue-arrow)", fontSize: "14px" }}>
+                3 дня
+              </Typography>
+            </Box>
+            <KeyboardArrowRightIcon sx={stylesSX.arrow} />
+          </>
+        }
+      />
     </Box>
   );
 };

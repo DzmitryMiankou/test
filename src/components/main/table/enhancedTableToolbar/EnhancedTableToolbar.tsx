@@ -42,8 +42,6 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     arr.push(el?.source);
   });
 
-  const names = new Set<string>(arr);
-
   const rows = [
     createData(
       1,
@@ -68,10 +66,8 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     ),
     createData(
       4,
-      state?.listCallReducer?.order4 === ""
-        ? "Все источники"
-        : state?.listCallReducer?.order4,
-      Array.from(names),
+      "Все источники",
+      ["Yandex", "Google", "Mail"],
       "Все источники"
     ),
     createData(
@@ -126,7 +122,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
             justifyContent: "flex-end",
           }}
         >
-          <DeleteFilterButton />
+          <DeleteFilterButton state={state?.listCallReducer?.order} />
           <MenuList data={rows} state={state} />
         </Box>
       </Box>
