@@ -1,25 +1,27 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Checkbox,
+  Table,
+  Box,
+} from "@mui/material";
 import EnhancedTableToolbar from "./enhancedTableToolbar/EnhancedTableToolbar";
 import EnhancedTableHead from "./enhancedTableHead/EnhancedTableHead";
 import imgNoAva from "../../../img/noavatar.jpg";
 import CallMadeIcon from "@mui/icons-material/CallMade";
-import { useGetAudioQuery } from "../../../redux/RTK/rtk";
+import PlayAudio from "./playAudio/PlayAudio";
+//import { useGetAudioQuery } from "../../../redux/RTK/rtk";
 
-function Audio({ id, id_s }: any) {
-  const { data } = useGetAudioQuery(
-    `mango/getRecord?record=${id}&partnership_id=${id_s}`
-  );
-
-  return <Box>{data}</Box>;
-}
+const toMinetfromSec = (sec: number): null | string => {
+  if (sec) {
+    return Math.floor(sec / 60) + ":" + (sec % 60);
+  }
+  return null;
+};
 
 type PartnerDadaType = {
   id: string;
@@ -117,11 +119,10 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
         selected.slice(selectedIndex + 1)
       );
     }
-
     setSelected(newSelected);
   };
 
-  const isSelected = (name: string | any) => selected.indexOf(name) !== -1;
+  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   const emptyRows =
     page > 0
@@ -137,15 +138,13 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     [order, orderBy, page, rowsPerPage, data]
   );
 
-  const formatNumberPhone = (str: string) => {
-    let cleaned = ("" + str).replace(/\D/g, "");
-
-    let match = cleaned.match(/^(1|)?(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
-
+  const formatNumberPhone = (str: string): string | null => {
+    const cleaned: string = ("" + str).replace(/\D/g, "");
+    const match: RegExpMatchArray | null = cleaned.match(
+      /^(1|)?(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/
+    );
     if (match) {
-      //Remove the matched extension code
-      //Change this to format for any country code.
-      let intlCode = match[1] ? "+1 " : "+";
+      const intlCode: "+1 " | "+" = match[1] ? "+1 " : "+";
       return [
         intlCode,
         match[2],
@@ -159,7 +158,6 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
         match[5],
       ].join("");
     }
-
     return null;
   };
 
@@ -177,147 +175,192 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
               onSelectAllClick={handleSelectAllClick}
               rowCount={data?.listCall?.length}
             />
+
             <TableBody>
               {visibleRows?.map((row, index) => {
                 const isItemSelected = isSelected(row?.date);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow
-                    onMouseEnter={() => setIsShown(`${row?.id}`)}
-                    onMouseLeave={() => setIsShown("")}
-                    hover
-                    onClick={(event) => handleClick(event, row?.date)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row?.date}
-                    selected={isItemSelected}
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": {
-                        background: "var(--blue-selected-row) !important",
-                      },
-                    }}
-                  >
-                    <TableCell
-                      padding="checkbox"
+                  <React.Fragment key={row?.date}>
+                    <TableRow
+                      onMouseEnter={() => setIsShown(`${row?.id}`)}
+                      onMouseLeave={() => setIsShown("")}
+                      hover
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      selected={isItemSelected}
                       sx={{
-                        borderBottom: "none",
-                        width: "20px",
+                        cursor: "pointer",
+                        "&:hover": {
+                          background: "var(--blue-selected-row) !important",
+                        },
                       }}
                     >
-                      <Checkbox
-                        id={`${row?.id}`}
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
+                      <TableCell
+                        padding="checkbox"
+                        onClick={(event) => handleClick(event, row?.date)}
                         sx={{
-                          color: "var(--blue-checked)",
-                          display:
-                            isShown === `${row?.id}` ||
-                            isItemSelected ||
-                            !selected
-                              ? "flex"
-                              : "none",
-                          alignItems: "center",
+                          borderBottom: "none",
+                          width: "20px",
                         }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        width: "50px",
-                        paddingLeft: 0,
-                        borderBottom: "1px solid #EAF0FA",
-                        paddingRight: 0,
-                      }}
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                    >
-                      {row?.in_out === 0 ? (
-                        <CallMadeIcon
+                      >
+                        <Checkbox
+                          id={`${row?.id}`}
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                          }}
                           sx={{
-                            color: "var(--green-analytic)",
-                            fontSize: "20px",
+                            color: "var(--blue-checked)",
+                            display:
+                              isShown === `${row?.id}` ||
+                              isItemSelected ||
+                              !selected
+                                ? "flex"
+                                : "none",
+                            alignItems: "center",
                           }}
                         />
-                      ) : row?.in_out === 1 ? (
-                        <CallMadeIcon
+                      </TableCell>
+                      <TableCell
+                        onClick={(event) => handleClick(event, row?.date)}
+                        sx={{
+                          width: "50px",
+                          paddingLeft: 0,
+                          borderBottom: "1px solid #EAF0FA",
+                          paddingRight: 0,
+                        }}
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                      >
+                        {row?.in_out === 0 ? (
+                          <CallMadeIcon
+                            sx={{
+                              color: "var(--green-analytic)",
+                              fontSize: "20px",
+                            }}
+                          />
+                        ) : row?.in_out === 1 ? (
+                          <CallMadeIcon
+                            sx={{
+                              color: "var(--blue-arrow)",
+                              fontSize: "20px",
+                              transform: "rotate(180deg)",
+                            }}
+                          />
+                        ) : (
+                          <CallMadeIcon
+                            sx={{ color: "var(--green-red)", fontSize: "20px" }}
+                          />
+                        )}
+                      </TableCell>
+                      <TableCell
+                        onClick={(event) => handleClick(event, row?.date)}
+                        sx={{
+                          width: "70px",
+                          borderBottom: "1px solid #EAF0FA",
+                        }}
+                        align="left"
+                      >{`${new Date(row?.date).toLocaleString("ru", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}`}</TableCell>
+                      <TableCell
+                        onClick={(event) => handleClick(event, row?.date)}
+                        sx={{
+                          width: "120px",
+                          borderBottom: "1px solid #EAF0FA",
+                        }}
+                        align="left"
+                      >
+                        <Box
+                          component="img"
+                          alt="avatar"
+                          src={`${row?.person_avatar}` || imgNoAva}
                           sx={{
-                            color: "var(--blue-arrow)",
-                            fontSize: "20px",
-                            transform: "rotate(180deg)",
+                            height: "30px",
+                            width: "30px",
+                            borderRadius: "50px",
                           }}
                         />
-                      ) : (
-                        <CallMadeIcon
-                          sx={{ color: "var(--green-red)", fontSize: "20px" }}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{ width: "70px", borderBottom: "1px solid #EAF0FA" }}
-                      align="left"
-                    >{`${new Date(row?.date).toLocaleString("ru", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}`}</TableCell>
-                    <TableCell
-                      sx={{ width: "120px", borderBottom: "1px solid #EAF0FA" }}
-                      align="left"
-                    >
-                      <Box
-                        component="img"
-                        alt="avatar"
-                        src={`${row?.person_avatar}` || imgNoAva}
+                      </TableCell>
+                      <TableCell
+                        onClick={(event) => handleClick(event, row?.date)}
+                        sx={{ borderBottom: "1px solid #EAF0FA" }}
+                        align="left"
+                      >
+                        {formatNumberPhone(row?.partner_data.phone)}
+                      </TableCell>
+                      <TableCell
+                        onClick={(event) => handleClick(event, row?.date)}
                         sx={{
-                          height: "30px",
-                          width: "30px",
-                          borderRadius: "50px",
+                          color: "var(--grey-source)",
+                          borderBottom: "1px solid #EAF0FA",
+                          width: "15%",
                         }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderBottom: "1px solid #EAF0FA" }}
-                      align="left"
-                    >
-                      {formatNumberPhone(row?.partner_data.phone)}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        color: "var(--grey-source)",
-                        borderBottom: "1px solid #EAF0FA",
-                        width: "15%",
-                      }}
-                      align="left"
-                    >
-                      {row?.source}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        borderBottom: "1px solid #EAF0FA",
-                        color: "#EA1A4F",
-                        width: "200px",
-                      }}
-                      align="left"
-                    >
-                      {row?.errors}
-                    </TableCell>
-                    <TableCell
-                      sx={{ borderBottom: "1px solid #EAF0FA" }}
-                      align="right"
-                    >
-                      {row?.time === 0 ? <></> : `0:${row?.time}`}
-                      {row?.time !== 0 ? (
-                        <Audio id={row?.id} id_s={row?.partnership_id} />
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                  </TableRow>
+                        align="left"
+                      >
+                        {row?.source}
+                      </TableCell>
+                      <TableCell
+                        onClick={(event) => handleClick(event, row?.date)}
+                        sx={{
+                          borderBottom: "1px solid #EAF0FA",
+                          color: "#EA1A4F",
+                          width: "200px",
+                        }}
+                        align="left"
+                      >
+                        {row?.errors}
+                      </TableCell>
+                      <TableCell
+                        onClick={(event) => {
+                          row?.time !== 0
+                            ? event.preventDefault()
+                            : handleClick(event, row?.date);
+                        }}
+                        sx={{
+                          borderBottom: "1px solid #EAF0FA",
+                          width: "350px",
+                          cursor: row?.time !== 0 ? "default" : "pointer",
+                        }}
+                        align="right"
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "center",
+                          }}
+                        >
+                          {row?.time === 0 ? (
+                            <></>
+                          ) : isShown !== `${row?.id}` ? (
+                            toMinetfromSec(+row?.time)
+                          ) : (
+                            <></>
+                          )}
+                          {row?.time !== 0 ? (
+                            isShown === `${row?.id}` ? (
+                              <PlayAudio
+                                id={row?.id}
+                                id_s={row?.partnership_id}
+                                time={+row?.time}
+                              />
+                            ) : (
+                              <></>
+                            )
+                          ) : (
+                            <></>
+                          )}
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  </React.Fragment>
                 );
               })}
               {emptyRows > 0 && (
@@ -336,3 +379,34 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
     </Box>
   );
 }
+
+/*const dataGap = (data: string): string => {
+    if (data === "2023-06-13 13:43:38") {
+      return "0";
+    } else {
+      return new Date(data).toLocaleString("ru", {
+        day: "2-digit",
+        month: "2-digit",
+      });
+    }
+  };
+                      <TableRow sx={{ fontSize: "14px" }}>
+                      <TableCell sx={{ borderBottom: "none" }} />
+                      <TableCell
+                        sx={{
+                          borderBottom: "1px solid #EAF0FA",
+                          paddingLeft: 0,
+                        }}
+                      >
+                        {dataGap(row?.date)}
+                      </TableCell>
+                      <>
+                        {[1, 2, 3, 4, 5, 6].map((number: number, i) => (
+                          <TableCell
+                            key={i}
+                            sx={{ borderBottom: "1px solid #EAF0FA" }}
+                          />
+                        ))}
+                      </>
+                    </TableRow>
+  */
