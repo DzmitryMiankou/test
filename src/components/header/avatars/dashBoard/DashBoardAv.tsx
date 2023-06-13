@@ -67,15 +67,15 @@ const dataPartners = {
       headibg: "Логисты",
       list: [
         {
-          id: 1,
+          id: 5,
           name: "Александра Сизых",
         },
         {
-          id: 2,
+          id: 6,
           name: "Илья Алексеев",
         },
         {
-          id: 3,
+          id: 7,
           name: "Илья Алексеев",
         },
       ],
@@ -84,15 +84,15 @@ const dataPartners = {
       headibg: "Бухгалтеры",
       list: [
         {
-          id: 1,
+          id: 8,
           name: "Полина Калинина",
         },
         {
-          id: 2,
+          id: 9,
           name: "Наталья Натальева",
         },
         {
-          id: 3,
+          id: 10,
           name: "Константин Константинопольский",
         },
       ],
@@ -124,16 +124,26 @@ const styleSX: Record<string, SxProps<Theme>> = {
   },
 };
 
-const DashBoardAv = ({ components }: { components: JSX.Element }) => {
+const DashBoardAv = ({
+  components,
+  setOpen,
+}: {
+  components: JSX.Element;
+  setOpen: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    setOpen(event);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (): void => {
+  const handleClose = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    setOpen(event);
     setAnchorEl(null);
   };
 

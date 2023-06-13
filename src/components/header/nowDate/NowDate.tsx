@@ -9,7 +9,7 @@ const enum DateOptions {
 
 const NowDate = () => {
   const getDate = (options: Object): string => {
-    const date = new Date().toLocaleString("ru", options);
+    const date = new Date().toLocaleString("ru", options).slice(0, -1);
     return date;
   };
 

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { CustomWidthTooltip } from "../listPartners/ListPartners";
 
 const UserData = ({ dadaUser }: { dadaUser: any }) => {
   return (
@@ -11,14 +12,16 @@ const UserData = ({ dadaUser }: { dadaUser: any }) => {
           {`${dadaUser.surname} ${dadaUser.name}`}
         </Typography>
         <Box sx={{ cursor: "pointer", marginLeft: "auto" }}>
-          <LogoutOutlinedIcon
-            sx={{
-              color: "var(--blue-checked)",
-              "&:hover": {
-                color: "var(--blue-buuton-hover)",
-              },
-            }}
-          />
+          <CustomWidthTooltip title="Выйти" placement="bottom-end">
+            <LogoutOutlinedIcon
+              sx={{
+                color: "var(--blue-checked)",
+                "&:hover": {
+                  color: "var(--blue-buuton-hover)",
+                },
+              }}
+            />
+          </CustomWidthTooltip>
         </Box>
       </Box>
       <Box

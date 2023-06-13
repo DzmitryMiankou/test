@@ -24,18 +24,20 @@ const styleSX = {
 };
 
 const Avatars = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
     setOpen(!open);
   };
 
   return (
     <DashBoardAv
+      setOpen={handleClick}
       components={
         <>
           <Avatar alt="Remy Sharp" src={AvatarMain} />
-          <Box onClick={handleClick}>
+          <Box onClick={(e) => handleClick}>
             {open ? (
               <ExpandLess sx={styleSX.button1} />
             ) : (
