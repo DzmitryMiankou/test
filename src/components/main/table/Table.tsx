@@ -325,6 +325,8 @@ export default function EnhancedTable({ data }: { [x: string]: any }) {
                         }}
                         sx={{
                           borderBottom: "1px solid #EAF0FA",
+                          position: "relative",
+                          overflowX: "hidden",
                           width: "350px",
                           cursor: row?.time !== 0 ? "default" : "pointer",
                         }}

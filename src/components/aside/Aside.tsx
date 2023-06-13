@@ -139,6 +139,22 @@ const Aside = () => {
             <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
               {data}
             </Typography>
+            <>
+              {data === "звонки" ? (
+                <Box
+                  sx={{
+                    width: "8px",
+                    backgroundColor: "var(--green-yellow)",
+                    height: "8px",
+                    borderRadius: "50px",
+                    marginLeft: "auto",
+                    boxShadow: "0px 3px 8px rgba(237, 218, 1, 0.5)",
+                  }}
+                ></Box>
+              ) : (
+                <></>
+              )}
+            </>
           </ListItemButton>
         ))}
       </List>
@@ -156,6 +172,7 @@ const Aside = () => {
             <Typography
               sx={{
                 marginLeft: "auto",
+                marginRight: text === "Оплата" ? "-20px" : 0,
                 textTransform: "none",
                 fontWeight: "500",
                 fontSize: "16px",

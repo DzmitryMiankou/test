@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Avatar } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import DashBoardAv from "./dashBoard/DashBoardAv";
+import AvatarMain from "../../../img/img.png";
 
 const initialStyle = {
   transition: "0.2s",
@@ -12,14 +14,6 @@ const initialStyle = {
 };
 
 const styleSX = {
-  box: {
-    display: "flex",
-    alignItems: "center",
-    "& .MuiBox-root": {
-      cursor: "pointer",
-      height: "24px",
-    },
-  },
   button1: {
     ...initialStyle,
   },
@@ -37,16 +31,20 @@ const Avatars = () => {
   };
 
   return (
-    <Box sx={styleSX.box}>
-      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-      <Box onClick={handleClick}>
-        {open ? (
-          <ExpandLess sx={styleSX.button1} />
-        ) : (
-          <ExpandMore sx={styleSX.button2} />
-        )}
-      </Box>
-    </Box>
+    <DashBoardAv
+      components={
+        <>
+          <Avatar alt="Remy Sharp" src={AvatarMain} />
+          <Box onClick={handleClick}>
+            {open ? (
+              <ExpandLess sx={styleSX.button1} />
+            ) : (
+              <ExpandMore sx={styleSX.button2} />
+            )}
+          </Box>
+        </>
+      }
+    />
   );
 };
 
