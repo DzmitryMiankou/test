@@ -16,7 +16,7 @@ interface TypeProps {
   setOpen(x: number): void;
   id: number;
   setIsShown(x: number): void;
-  rows?: Array<number | string | null>;
+  rows?: Array<number | string | null | any>;
   order?: string;
   state: RootState;
 }

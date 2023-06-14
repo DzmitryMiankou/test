@@ -14,14 +14,14 @@ interface EnhancedTableToolbarProps {
 interface Data {
   id: number;
   text: string;
-  rows?: Array<number | string | null> | [Set<string>];
+  rows?: Array<number | string | null> | [Set<string>] | any;
   order?: string;
 }
 
 function createData(
   id: number,
   text: string,
-  rows?: Array<number | string | null> | [Set<string>],
+  rows?: Array<number | string | null> | [Set<string>] | any,
   order?: string
 ): Data {
   return {
@@ -73,7 +73,95 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     createData(
       5,
       "Все оценки",
-      ["Распознать", "Скрипт не использован", "Плохо"],
+      [
+        "Распознать",
+        "Скрипт не использован",
+        <Box
+          sx={{
+            color: "#EA1A4F",
+            backgroundColor: "#FEE9EF",
+            border: "1px solid #EA1A4F",
+            borderRadius: "4px",
+            p: "6px 8px",
+          }}
+        >
+          Плохо
+        </Box>,
+        <Box
+          sx={{
+            color: "#122945",
+            background: "#D8E4FB",
+            border: "1px solid #ADBFDF",
+            borderRadius: "4px",
+            p: "6px 8px",
+          }}
+        >
+          Хорошо
+        </Box>,
+        <Box
+          sx={{
+            color: "#00A775",
+            background: "#DBF8EF",
+            border: "1px solid #28A879",
+            borderRadius: "4px",
+            p: "6px 8px",
+          }}
+        >
+          Отлично
+        </Box>,
+        <Box
+          sx={{
+            width: "8px",
+            height: "8px",
+            background: "#EA1A4F",
+            borderRadius: "48px",
+          }}
+        />,
+        <Box sx={{ display: "flex", gap: "3px" }}>
+          <Box
+            sx={{
+              width: "8px",
+              height: "8px",
+              background: "#ADBFDF",
+              borderRadius: "48px",
+            }}
+          />
+          <Box
+            sx={{
+              width: "8px",
+              height: "8px",
+              background: "#ADBFDF",
+              borderRadius: "48px",
+            }}
+          />
+        </Box>,
+        <Box sx={{ display: "flex", gap: "3px" }}>
+          <Box
+            sx={{
+              width: "8px",
+              height: "8px",
+              background: "#28A879",
+              borderRadius: "48px",
+            }}
+          />
+          <Box
+            sx={{
+              width: "8px",
+              height: "8px",
+              background: "#28A879",
+              borderRadius: "48px",
+            }}
+          />
+          <Box
+            sx={{
+              width: "8px",
+              height: "8px",
+              background: "#28A879",
+              borderRadius: "48px",
+            }}
+          />
+        </Box>,
+      ],
       "Все оценки"
     ),
     createData(
