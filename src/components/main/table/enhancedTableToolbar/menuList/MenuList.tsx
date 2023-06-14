@@ -86,7 +86,9 @@ const MenuList = ({ data, state }: { [x: string]: any; state: RootState }) => {
                       <ExpandMore
                         sx={{
                           color:
-                            isShown === id ? "var(--blue-hover)" : "#ADBFDF",
+                            isShown === id
+                              ? "var(--blue-hover)"
+                              : "var(--blue-checked)",
                         }}
                       />
                     )}

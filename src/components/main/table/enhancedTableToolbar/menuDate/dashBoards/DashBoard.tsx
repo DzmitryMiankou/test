@@ -1,21 +1,28 @@
 import * as React from "react";
 import Popover from "@mui/material/Popover";
-import { SxProps, Theme, Box, ListItemButton } from "@mui/material";
+import { SxProps, Theme, Box, ListItemButton, Typography } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
+import "dayjs/locale/ru";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 const dataCalen = [
   { id: 1, text: "3 дня" },
   { id: 2, text: "Неделя" },
   { id: 3, text: "Месяц" },
   { id: 4, text: "Год" },
-  { id: 5, text: "Указать даты" },
 ];
 const styleSX: Record<string, SxProps<Theme>> = {
   popover: {
     "& .MuiPopover-paper": {
-      border: "1px solid #EAF0FA",
-      boxShadow: "0px 0px 26px rgba(233, 237, 243, 0.8)",
+      border: "1px solid var(--light-grey)",
+      boxShadow: "0px 0px 26px var(--grey-opacity)",
       borderRadius: "4px",
       width: "204px",
+    },
+    "& .MuiDateCalendar-root": {
+      backgroundColor: "red",
     },
   },
   heading: {
@@ -43,7 +50,6 @@ const DashBordDate = ({
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-  const [get, set] = React.useState<number>(0);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     setOpen(event);
@@ -96,7 +102,9 @@ const DashBordDate = ({
                 key={id}
                 sx={{
                   color:
-                    text === "3 дня" ? "#002CFB" : "var(--grey-text-light)",
+                    text === "3 дня"
+                      ? "var(--blue-hover)"
+                      : "var(--grey-text-light)",
                   p: "7px 20px",
                   fontSize: "14px",
                   "&:hover": {
@@ -104,14 +112,43 @@ const DashBordDate = ({
                     backgroundColor: "var(--blue-hover-opacity)",
                   },
                 }}
-                onMouseEnter={() => set(id)}
-                onMouseLeave={() => set(0)}
               >
                 {text}
               </ListItemButton>
             </React.Fragment>
           ))}
         </>
+        <Typography
+          sx={{
+            fontSize: "14px",
+            p: "7px 20px",
+            color: "var(----blue-text-dark)",
+          }}
+        >
+          Указать даты
+        </Typography>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+          <DesktopDatePicker
+            value={"__.__.__"}
+            sx={{
+              border: "none !important",
+              m: "7px 20px",
+              "& .MuiInputBase-root": {
+                color: "var(--blue-checked)!important",
+              },
+              "& .MuiButtonBase-root": {
+                color: "var(--blue-checked)!important",
+                border: "none",
+              },
+              "& .MuiFormLabel-root": {
+                color: "var(--blue-checked)!important",
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "none",
+              },
+            }}
+          />
+        </LocalizationProvider>
       </Popover>
     </Box>
   );
